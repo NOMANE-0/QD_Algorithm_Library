@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="description" content="Description">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css">
+</head>
+<body>
+  <nav>
+    <a href="#/">EN</a>
+    <a href="#/zh-cn/">中文</a>
+  </nav>
+  <div id="app"></div>
+  <script>
+    window.$docsify = {
+      name: '奇点算法组知识库',
+      repo: '',	// 配置仓库地址或者 username/repo 的字符串，会在页面右上角渲染一个 GitHub Corner 挂件
+      loadSidebar: true,		// 加载自定义侧边栏。设置为 true 后会加载 _sidebar.md 文件
+      loadNavbar: true,	// 加载自定义导航栏。置为 true 后会加载 _navbar.md
+      subMaxLevel: 3,	// 自定义侧边栏后默认不会再生成目录，你也可以通过设置生成目录的最大层级开启这个功能。
+      coverpage: true,	// 只在访问主页时加载封面
+
+
+    }
+  </script>
+  <!-- Docsify v4 -->
+  <script src="//cdn.jsdelivr.net/npm/docsify@4"></script>
+  <script src="https://cdn.jsdelivr.net/npm/docsify-terminal-block@1.0.3"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/zoom-image.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>
+  <script>
+ 	 if (typeof navigator.serviceWorker !== 'undefined') {
+    		navigator.serviceWorker.register('sw.js')
+  	}
+  </script>
+  
+</body>
+</html>
