@@ -1,6 +1,8 @@
 # 奇点算法组知识库
 
-## 使用指南
+直接访问https://nomane-0.github.io/QD_Algorithm_Library/#/
+
+## 本地使用指南
 
 - 使用cmd输入命令看有没有输出版本号，没有需要去安装`Node.js`和`npm`
 
