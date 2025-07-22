@@ -22,6 +22,7 @@
       loadNavbar: true,	// 加载自定义导航栏。置为 true 后会加载 _navbar.md
       subMaxLevel: 3,	// 自定义侧边栏后默认不会再生成目录，你也可以通过设置生成目录的最大层级开启这个功能。
       coverpage: true,	// 只在访问主页时加载封面
+      auto2top: true,   // 切换页面后是否自动跳转到页面顶部
 
 
     }
@@ -36,6 +37,8 @@
     		navigator.serviceWorker.register('sw.js')
   	}
   </script>
+  <script src="//cdn.jsdelivr.net/npm/docsify-edit-on-github"></script>   // 在 Github 上编辑
+
   
 </body>
 </html>

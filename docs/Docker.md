@@ -112,6 +112,22 @@ ros2 launch foxglove_bridge foxglove_bridge_launch.xml
 
 
 
+## VScode 开发
+
+- 安装vscdoe扩展`Docker`、`Dev Containers`
+
+![image-20250722203104541](images/image-20250722203104541.png)
+
+![image-20250722203114654](images/image-20250722203114654.png)
+
+- 使用扩展控制容器和附加进容器（在vscode中使用容器里的文件和终端）
+
+![image-20250722203357355](images/image-20250722203357355.png)
+
+![image-20250722203438418](images/image-20250722203438418.png)
+
+
+
 ## 常见问题
 
 ### 无法开机自启loaded failed failed LSB
