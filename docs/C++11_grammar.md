@@ -1,7 +1,5 @@
 # C++11 语法新特性
 
-
-
 ## C++ STL prev()函数
 
 1.直观理解
@@ -28,7 +26,7 @@ new_iterator = prev(iterator)
 template< class BidirIt >BidirIt prev(
   BidirIt it, 
   typename std::iterator_traits<BidirIt>::difference_type n = 1 );
- 
+
 template< class BidirIt >constexpr BidirIt prev(
   BidirIt it, 
   typename std::iterator_traits<BidirIt>::difference_type n = 1 );

@@ -52,18 +52,13 @@ usbipd attach --wsl --busid <busid>
 
 # 断开 USB 设备
 usbipd detach --busid <busid>
-
 ```
-
-
 
 ## NVIDIA驱动
 
 只要windows本体有安装显卡驱动，wsl会自动有的
 
 输入`nvidia-smi`，如果有输出就是wsl有驱动了
-
-
 
 ## 常见问题
 
