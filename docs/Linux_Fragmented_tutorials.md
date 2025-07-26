@@ -44,8 +44,6 @@ unzip -j wt.zip
 3. 使用`./filename.run`命令运行run文件，例如：**`./filename.run`**
 4. 根据提示操作，一般会提示按回车键确认，或者输入yes/no等，按照提示操作即可。
 
-
-
 ## **Linux中PATH、 LIBRARY_PATH、 LD_LIBRARY_PATH的区别:**
 
 [Linux中PATH、 LIBRARY_PATH、 LD_LIBRARY_PATH的区别_ld_library_path library_path 区别-CSDN博客](https://blog.csdn.net/weixin_48859611/article/details/113986310)

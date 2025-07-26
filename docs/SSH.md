@@ -14,7 +14,6 @@ sudo apt install openssh-server
 # 查看ssh服务状态
 # 如果运行该命令时提示 "找不到 ssh.service 单元"，则需要安装 SSH 服务
 sudo systemctl status ssh
-
 ```
 
 `sudo systemctl status ssh`输出如下
@@ -58,6 +57,7 @@ sudo systemctl enable --now ssh
 想要ssh远程连接，需要知道被控端的用户名`$USER`和地址 `ip`
 
 - `$USER`用户名获取：在被控端终端输入`echo $USER`，输入的结果就是用户名
+
 - `ip`地址获取：在被控端终端输入`ip a`，在输出的信息中查找网络接口（如 `eth0`、`ens33` 或 `wlan0`），地址通常以 `inet` 开头（如 `inet 192.168.1.100/24`），`192.168.1.100`就是ip地址
 
 - ssh连接：在主机终端输入`ssh $USER@ip`，然后会要求你输入被控端的密码，输入即可连接
@@ -70,8 +70,6 @@ ED25519 key fingerprint is SHA256:+ULzij2u99B9eWYFTw1Q4ErYG/aepHLbu96PAUCoV88.
 This key is not known by any other names
 Are you sure you want to continue connecting (yes/no/[fingerprint])?
 ```
-
-
 
 ## ssh密钥
 
@@ -91,6 +89,3 @@ ssh-copy-id $USER@ip
 ```
 
 当然也可以手动复制公钥过去，将公钥上传到被控端的`~/.ssh/authorized_keys `里，文件不存在的话自己创建一个
-
-
-

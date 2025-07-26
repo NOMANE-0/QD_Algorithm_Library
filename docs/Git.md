@@ -19,7 +19,6 @@ git clone <repo_url>
 
 # 克隆指定分支的代码
 git clone -b <branch> <repo_url>
-
 ```
 
 ### 本地仓库
@@ -42,7 +41,6 @@ git push
 
 # 在克隆的仓库下拉取最新代码
 git pull
-
 ```
 
 ## 忽略文件
@@ -58,10 +56,7 @@ build/
 install/
 log/
 *.txt
-
 ```
-
-
 
 ## VScode
 
@@ -74,8 +69,6 @@ vscdoe给我们提供了可视化的git操作面板。现在提供如何使用vs
 - 初始化仓库
 
 ![image-20250721215146290](images/image-20250721215146290.png)
-
-
 
 - 添加远程仓库
 
@@ -110,7 +103,5 @@ vscdoe给我们提供了可视化的git操作面板。现在提供如何使用vs
   - 注意一开始的`mkdir`和`cd`这两个，注意路径问题
 
 ![image-20250721193121321](images/image-20250721193121321.png)
-
-
 
 ## [Github](https://github.com/)

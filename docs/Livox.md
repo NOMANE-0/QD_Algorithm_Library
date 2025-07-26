@@ -4,17 +4,17 @@
 
 如图，航空插接雷达，网线接电脑，功能线可以暂时不需要管。
 
-<img title="" src="file:///C:/Users/faIse/AppData/Roaming/marktext/images/2025-07-23-16-36-39-image.png" alt="" data-align="center">
+<img title="" src="./images/2025-07-23-16-36-39-image.png" alt="2025-07-23-16-36-39-image" data-align="center" width="525">
 
 供电非常重要，雷达需要稳定的外部供电，电源参照以下设计：
 
-<img title="" src="file:///C:/Users/faIse/AppData/Roaming/marktext/images/2025-07-23-16-38-14-image.png" alt="" data-align="center">
+<img title="" src="./images/2025-07-23-16-38-14-image.png" alt="2025-07-23-16-38-14-image" width="649" data-align="center">
 
 ## IP设置
 
 在设置中将有线IP地址设为`192.168.1.50`，子网掩码`255.255.255.0`，网关`192.168.1.1`。
 
-<img title="" src="file:///C:/Users/faIse/AppData/Roaming/marktext/images/2025-07-23-16-35-50-image.png" alt="" data-align="center" width="559">
+<img title="" src="./images/2025-07-23-16-35-50-image.png" alt="2025-07-23-16-35-50-image" width="628" data-align="center">
 
 ## 安装livox sdk
 
@@ -45,7 +45,7 @@ sh ./LivoxViewer2.sh
 
 如果一切正常，将会看到雷达点云。
 
-<img src="https://ucc.alicdn.com/skfx5krbg6tgi_20240821_e07d6721d1ee46ac9df987adfcec9fc4.png?x-oss-process=image/resize,w_1400/format,webp" title="" alt="在这里插入图片描述" data-align="center">
+![94f08b26523ba9b2d8c977ffb8f8d28f](./images/94f08b26523ba9b2d8c977ffb8f8d28f.png)
 
 ## 编译livox_ros_driver2
 
@@ -120,4 +120,4 @@ source /opt/ros/humble/setup.sh
 roslaunch livox_ros_driver2 rviz_MID360.launch
 ```
 
-![在这里插入图片描述](https://ucc.alicdn.com/skfx5krbg6tgi_20240821_e697ec66a4c641248e3e101821176b1e.png?x-oss-process=image/resize,w_1400/format,webp)
+![9f21b94d5adfbfcb9ad27a12d4cfd3b8](./images/9f21b94d5adfbfcb9ad27a12d4cfd3b8.png)
