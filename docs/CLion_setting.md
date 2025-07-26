@@ -195,7 +195,7 @@ include_directories(${PROJECT_SOURCE_DIR}/nx_refs)
 ## 参考文章：
 
 > 原文链接：[Ubuntu下安装Clion_ubuntu安装clion-CSDN博客](https://blog.csdn.net/caiqidong321/article/details/130126200)
->
+> 
 > 原文链接：[CLion安装、配置、使用、调试(完全小白向)-CSDN博客](https://blog.csdn.net/annesede/article/details/133940779)
->
+> 
 > 原文链接：[ROS2 setup tutorial | CLion](https://www.jetbrains.com.cn/en-us/help/clion/ros2-tutorial.html)

@@ -14,7 +14,7 @@ The IPOPT solver comes with a feature to detect the presence of 'libhsl.so'/'lib
 
 **IPOPT的安装需要安装libhsl.so库。**
 
-###  方式2：源码安装
+### 方式2：源码安装
 
 1. 安装依赖
 
@@ -29,7 +29,7 @@ mkdir ~/Ipopt_pkg
 cd Ipopt_pkg
 ```
 
-#### 安装`ASL` 
+#### 安装`ASL`
 
 ASL已经上传飞书。
 
@@ -131,7 +131,7 @@ sudo ln -s /usr/local/lib/libipopt.so.3 /usr/lib/libipopt.so.3
 
  Test passed都通过后 证明ipopt库安装成功了。
 
-###  Ipopt测试
+### Ipopt测试
 
 进入 IPOPT 源码文件夹如下位置，用官方例子测试
 
@@ -160,8 +160,6 @@ sudo ln -s /usr/local/lib/libipopt.so.3 /usr/lib/libipopt.so.3
 ## **CppAD+Ipopt +OSQP/OSQP-eigen环境安装与测试：**
 
 [Linux系统下eigen、osqp、osqp-eigen具体安装步骤(测试报错的人必看!)_linux 安装eigen-CSDN博客](https://blog.csdn.net/weixin_44724063/article/details/133387322?ops_request_misc=%7B%22request%5Fid%22%3A%22170617838016800222825799%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&request_id=170617838016800222825799&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-133387322-null-null.142^v99^pc_search_result_base3&utm_term=osqp安装&spm=1018.2226.3001.4187)
-
-
 
 ### 2.1 osqp库安装
 
@@ -273,13 +271,13 @@ https://github.com/coin-or/qpOASES
 #git clone git@github.com:casadi/casadi 
  git clone https://github.com/casadi/casadi
 cd casadi
- 
- 
+
+
 
 mkdir build
- 
+
 cd build
- 
+
  #cmake编译时不要使用教程上提供的“cmake -DWITH_PYTHON=ON ..”换成如下指令，否则会报can not load shared library "libcasadi_nlpsol_ipopt.so"
 #cmake -DWITH_IPOPT=ON -DWITH_SLICOT=ON -DWITH_LAPACK=ON 
 #-DWITH_QPOASES=ON -DWITH_OPENCL=ON -DWITH_OSQP=ON -DWITH_CLANG=ON ..
@@ -289,11 +287,11 @@ cd build
 cmake -DWITH_IPOPT=true DWITH_LAPACK=ON -DWITH_OSQP=ON  ..
 # 如出现clange的报错   the CMake files: CLANG_DEP_clangAST ，就把LAPACK去掉。
 cmake -DWITH_IPOPT=true -DWITH_OSQP=ON  ..
- 
+
 #cmake .. -DCMAKE_BUILD_TYPE=RELEASE 可不看，另一种编译方式。
- 
+
 sudo make -j8
- 
+
 sudo make install
 ```
 

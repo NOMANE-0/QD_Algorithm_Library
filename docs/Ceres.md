@@ -15,7 +15,6 @@ sudo apt install libceres-dev
 
 ### [编译安装](http://ceres-solver.org/installation.html)
 
-
 - 安装依赖
 
 ```terminal
@@ -43,7 +42,7 @@ git clone -b 2.2.0 https://github.com/ceres-solver/ceres-solver.git
 cd ceres-solver 
 mkdir build && cd build
 cmake ..
-make 	# 嫌慢的多线程编译 make -j<线程数>	
+make     # 嫌慢的多线程编译 make -j<线程数>    
 make install
 ```
 
@@ -106,8 +105,6 @@ Total                                0.383710
 Termination:                      CONVERGENCE (Function tolerance reached. |cost_change|/cost: 1.769759e-09 <= 1.000000e-06)
 ```
 
-
-
 ## CMakeLists.txt
 
 ```terminal
@@ -122,8 +119,6 @@ add_executable(helloworld helloworld.cc)
 target_link_libraries(helloworld Ceres::ceres)
 ```
 
-
-
 ## 常见问题
 
 ### 定义ceres::Problem时会导致代码报错
@@ -134,4 +129,3 @@ target_link_libraries(helloworld Ceres::ceres)
 add_executable(myCeres myCeres.cpp)
 target_link_libraries(myCeres ${OpenCV_LIBS} ${CERES_LIBRARIES})
 ```
-

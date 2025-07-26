@@ -9,7 +9,6 @@ sudo vim /etc/default/grub
 GRUB_DEFAULT=saved
 #加入
 GRUB_SAVEDEFAULT=true
-
 ```
 
 - 更新`grub`
@@ -17,4 +16,3 @@ GRUB_SAVEDEFAULT=true
 ```terminal
 sudo update-grub
 ```
-

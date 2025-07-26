@@ -1,13 +1,13 @@
 - [学习路线](Learning_path.md)
-
+  
   - [算法组第一阶段学习路线](Learning_path_1.md)
-
+  
   - [算法组第二阶段学习路线](Learning_path_2.md)
-
+  
   - [算法组第三阶段学习路线](Learning_path_3.md)
 
 - 技术入门与开发技巧
-
+  
   - ROS
     - [ROS命令补全](ROS_command_completion.md)
   - C++新特性
@@ -21,7 +21,7 @@
     - [深度学习基础](Fundamentals_of_Deep_Learning.md)
 
 - Ubuntu入门
-
+  
   - [基础命令](Basic_commands.md)
   - [Git](Git.md)
   - [SSH](SSH.md)
@@ -32,12 +32,12 @@
   - [Linux报错记录](Linux_Bug_log.md)
 
 - 环境配置
-
+  
   - [OpenCV](OpenCV.md)
   - [Ceres](Ceres.md)
   - [WSL2](WSL2.md)
   - [海康工业相机](hikvision.md)
-  - [Livox雷达驱动](Livox.md)
+  - [Livox mid360激光雷达](Livox.md)
   - [Nvidia驱动（Ubuntu）](Nvidia_driver.md)
   - [NUC设置](NUC_setting.md)
   - [固定设备地址](Fixed_equipment_address.md)
@@ -46,12 +46,8 @@
   - [CLion](CLion_setting.md)
 
 - 项目教程
-
+  
   - [相机标定](camera_calibration.md)
   - [串口通信](serial_communication.md)
 
 - 其他
-
-  
-
-  

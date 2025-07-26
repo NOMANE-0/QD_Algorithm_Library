@@ -42,9 +42,9 @@ void print_hello_world() {
 
 int main() {
     thread th01(print_hello_world);
-    
+
     th01.join();
-    
+
     return 0;
 }
 ```
@@ -54,9 +54,9 @@ int main() {
 ```C++
 int main() {
     thread th01(print_hello_world);
-    
+
     th01.detach();
-    
+
     return 0;
 }
 ```
@@ -67,16 +67,16 @@ int main() {
 int main() {
     thread th01(print_hello_world);
     bool isJoin = th01.joinable();
-    
+
     if(isJoin){
         th01.join();
     }
-    
+
     return 0;
 }
 ```
 
-## 传递参数   
+## 传递参数
 
 #### 传递形参
 
@@ -95,9 +95,9 @@ void print_hello_world(string msg) {
 
 int main() {
     thread th01(print_hello_world, "Hello World");
-    
+
     th01.join();
-    
+
     return 0;
 }
 ```
@@ -120,9 +120,9 @@ int main() {
     int a = 1;
     thread th01(foo, ref(a));
     th01.join();
-    
+
     cout<<"a = "<<a<<endl;
-    
+
     return 0;
 }
 ```
@@ -149,7 +149,7 @@ void test(){
 int main() {
    test();
    t.join();
-    
+
     return 0;
 }
 ```
@@ -277,7 +277,7 @@ void thread_func(){
 int main(){
 
     thread_func();
-    
+
     return 0;
 }
 ```
@@ -305,10 +305,10 @@ void func(){
 int main(){
     thread A(func);
     thread B(func);
-    
+
     A.join();
     B.join();
-    
+
     cout<<"a = "<<a<<endl;
     return 0;
 }
@@ -345,10 +345,10 @@ void func(){
 int main(){
     thread A(func);
     thread B(func);
-    
+
     A.join();
     B.join();
-    
+
     cout<<"a = "<<a<<endl;
     return 0;
 }
@@ -384,7 +384,7 @@ void func1() {
     Sleep(2000);
     mtx2.unlock();
     mtx1.unlock();
-    
+
 }
 
 void func2() {
@@ -401,7 +401,7 @@ int main() {
 
     A.join();
     B.join();
-    
+
     cout << "over" << endl;
 
     return 0;
@@ -430,7 +430,7 @@ void func1() {
     Sleep(2000);
     mtx1.unlock();
     mtx2.unlock();
-    
+
 }
 
 void func2() {
@@ -447,7 +447,7 @@ int main() {
 
     A.join();
     B.join();
-    
+
     cout << "over" << endl;
 
     return 0;
@@ -486,7 +486,7 @@ int main() {
     std::thread B(func);
     A.join();
     B.join();
-    
+
     std::cout << "over" << std::endl;
 }
 ```
@@ -569,7 +569,7 @@ void func() {
             // 让线程等待2秒后再继续
             std::this_thread::sleep_for(std::chrono::seconds(2));
             share_data += 1;
-            
+
         }else {
         std::cout << "Lock not acquired" << std::endl;
         // 未能在指定时间内获取互斥锁
@@ -602,10 +602,10 @@ void func() {
         // 设置超时时间点，例如从现在开始的1000毫秒后
         auto timeout = std::chrono::steady_clock::now() + 
         std::chrono::milliseconds(1000);
-        
+
         if (lg.try_lock_until(timeout) {
             share_data += 1;
-            
+
         } else {
         std::cout << "Lock not acquired" << std::endl;
         // 未能在指定时间内获取互斥锁
@@ -633,12 +633,12 @@ public:
 
     // 拷贝赋值运算符被删除，这意味着不能通过赋值来复制Log对象
     Log& operator=(const Log& log) = delete;
-    
+
     static Log& GetInstance(){
         static Log log;
         return log;
     }
-    
+
     void PrintLog(std::string msg){
         std::cout<<__TIME__<<' '<<msg<<std::endl;
     }
@@ -659,8 +659,8 @@ int main(){
 
 1. **std::cref (std::cref is short for "copy reference")**
 
-1. `std::cref`用于创建一个对const引用的引用包装器。它通常用于通过拷贝传递一个引用的拷贝，使得这个引用可以被存储和赋值。使用`std::cref`时，传入的引用在`std::cref`对象的生命周期内必须有效。
-
+2. `std::cref`用于创建一个对const引用的引用包装器。它通常用于通过拷贝传递一个引用的拷贝，使得这个引用可以被存储和赋值。使用`std::cref`时，传入的引用在`std::cref`对象的生命周期内必须有效。
+   
    例如：
 
 ```C++
@@ -672,8 +672,8 @@ auto refWrapper = std::cref(cref); // 创建一个对const引用的引用包装�
 
 1. **std::ref (std::ref is short for "reference")**
 
-1. `std::ref`用于创建一个对非常量引用的引用包装器。它允许非const引用被传递给函数，并且这个引用可以被存储和赋值。使用`std::ref`时，也需要保证传入的引用在`std::ref`对象的生命周期内有效。
-
+2. `std::ref`用于创建一个对非常量引用的引用包装器。它允许非const引用被传递给函数，并且这个引用可以被存储和赋值。使用`std::ref`时，也需要保证传入的引用在`std::ref`对象的生命周期内有效。
+   
    例如：
 
 ```C++
@@ -723,7 +723,7 @@ std::cref(cloudOrigin), std::ref(point_index_list[i]), std::ref(ignored_list[i])
 - 第一个线程（`i = 0`）：
   - `start = std::floor((0 * 100) / 4) = 0`
   - `end = std::ceil(((0 + 1) * 100) / 4) = std::ceil(25) = 25`
-  
+
 - 第二个线程（`i = 1`）：
   - `start = std::floor((1 * 100) / 4) = std::floor(25) = 25`
   - `end = std::ceil(((1 + 1) * 100) / 4) = std::ceil(50) = 50`

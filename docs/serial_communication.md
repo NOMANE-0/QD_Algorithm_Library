@@ -9,7 +9,7 @@
 我们应用串口通信主要用于与嵌入式进行信息传输，嵌入式将算法需要的数据发送过来，算法在执行完程序后，将要嵌入式执行的命令发送过去，简单来讲是这样的，后续可以开发出更多的功能...
 
 > [C++串口通信-CSDN博客](https://blog.csdn.net/wy749929317/article/details/123822353?ops_request_misc=%7B%22request%5Fid%22%3A%22171333713316800226592791%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&request_id=171333713316800226592791&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~baidu_landing_v2~default-1-123822353-null-null.142^v100^pc_search_result_base6&utm_term=串口通信C%2B%2B&spm=1018.2226.3001.4187)
->
+> 
 > [C++使用serial串口通信 + ROS2示例IMU串口驱动_c++串口通信-CSDN博客](https://blog.csdn.net/zardforever123/article/details/134227412?ops_request_misc=%7B%22request%5Fid%22%3A%22171333713316800226592791%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&request_id=171333713316800226592791&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~baidu_landing_v2~default-2-134227412-null-null.142^v100^pc_search_result_base6&utm_term=串口通信C%2B%2B&spm=1018.2226.3001.4187)
 
 ## 串口通信的应用：
