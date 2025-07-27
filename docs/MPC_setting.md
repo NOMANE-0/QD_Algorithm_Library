@@ -1,5 +1,9 @@
 # MPC开发环境配置
 
+## 要用到的库：
+
+ [mpc_pack](package\mpc_pack) 
+
 ## Ipopt环境安装：
 
 [非线性优化求解器IPOPT-CSDN博客](https://blog.csdn.net/nudt_zrs/article/details/123239598?ops_request_misc=%7B%22request%5Fid%22%3A%22170427557616800227446500%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&request_id=170427557616800227446500&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_click~default-2-123239598-null-null.142^v99^pc_search_result_base3&utm_term=Ipopt &spm=1018.2226.3001.4187)
