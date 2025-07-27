@@ -5,7 +5,6 @@
   - [算法组第二阶段学习路线](Learning_path_2.md)
   
   - [算法组第三阶段学习路线](Learning_path_3.md)
-
 - 技术入门与开发技巧
   
   - ROS
@@ -19,7 +18,6 @@
     - [YOLOv5学习](yolov5_learning.md)
     - [YOLOv8学习](yolov8_learning.md)
     - [深度学习基础](Fundamentals_of_Deep_Learning.md)
-
 - Ubuntu入门
   
   - [基础命令](Basic_commands.md)
@@ -30,7 +28,6 @@
   - [swap分区扩容](swap_expansion.md)
   - [Linux零碎教程](Linux_Fragmented_tutorials.md)
   - [Linux报错记录](Linux_Bug_log.md)
-
 - 环境配置
   
   - [OpenCV](OpenCV.md)
@@ -44,10 +41,9 @@
   - [MPC开发环境配置](MPC_setting.md)
   - [NVIDIA 驱动安装](NVIDIA_driver.md)
   - [CLion](CLion_setting.md)
-
 - 项目教程
   
   - [相机标定](camera_calibration.md)
   - [串口通信](serial_communication.md)
-
+  - [stl模型转栅格地图](stl_to_map.md)
 - 其他
