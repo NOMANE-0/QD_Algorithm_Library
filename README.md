@@ -1,6 +1,6 @@
 # 奇点算法组知识库
 
-直接访问https://nomane-0.github.io/QD_Algorithm_Library/#/
+直接访问 <https://nomane-0.github.io/QD_Algorithm_Library/#/>
 
 ## 本地使用指南
 
@@ -23,13 +23,17 @@ npm i docsify-cli -g
 docsify -v
 ```
 
-- 在根目录下输入`docsify serve docs`
+- 在根目录下输入以下命令启动网页
 
-- 访问 http://localhost:3000
+```bash
+docsify serve docs
+```
+
+- 访问 <http://localhost:3000>
 
 ## 编写指南
 
-不开新的`.md`文件的话直接修改现有的就行，如果要写新的`.md`文件的话，正常写就可以，然后在[目录](docs/_sidebar.md)上注册
+自己开一个`.md`文件写，然后在[目录](docs/_sidebar.md)链接文件
 
 ## 提交修改
 

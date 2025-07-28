@@ -9,6 +9,7 @@
   
   - ROS
     - [ROS命令补全](ROS_command_completion.md)
+    - [ROS依赖补全](rosdep.md)
   - C++新特性
     - [C++11 语法新特性](C++11_grammar.md)
     - [C++11 多线程](C++_multi_threading.md)
