@@ -106,3 +106,89 @@ X-GNOME-Autostart-enabled=true
 Name=SetResolution
 Comment=Set custom resolution at startup
 ```
+
+## 自启动脚本
+
+### 开启脚本
+
+如何使用
+
+```bash
+chmod +x setup_resolution_once.sh
+# 用法示例 
+./setup_resolution_once.sh 1024 500 DP-1
+# 如果不传参数，默认使用 1024x600 DP-1
+./setup_resolution_once.sh
+```
+
+脚本内容
+
+```bash
+#!/bin/bash
+
+# ========= 🧩 参数处理 =========
+RES_WIDTH=${1:-1024}
+RES_HEIGHT=${2:-600}
+OUTPUT_NAME=${3:-"DP-1"}
+REFRESH=60
+MODE_NAME="${RES_WIDTH}x${RES_HEIGHT}_${REFRESH}.00"
+SCRIPT_PATH="$HOME/.local/bin/set-resolution.sh"
+AUTOSTART_PATH="$HOME/.config/autostart/set-resolution.desktop"
+LOGFILE="$HOME/xrandr_setup_log.txt"
+# ==============================
+
+echo "📋 配置参数：${RES_WIDTH}x${RES_HEIGHT} @${REFRESH}Hz on ${OUTPUT_NAME}"
+
+# 创建目录
+mkdir -p ~/.local/bin
+mkdir -p ~/.config/autostart
+
+# ======= ✨ 写入分辨率设置脚本 =======
+cat > "$SCRIPT_PATH" <<EOF
+#!/bin/bash
+sleep 5
+echo "[\$(date)] 设置分辨率开始" >> "$LOGFILE"
+
+# 获取 Modeline 并解析
+read -r MODE_NAME MODE_PARAMS <<< \$(cvt $RES_WIDTH $RES_HEIGHT $REFRESH | grep Modeline | sed 's/Modeline //')
+
+# 检查模式是否已存在
+if ! xrandr | grep -q "\$MODE_NAME"; then
+    xrandr --newmode \$MODE_NAME \$MODE_PARAMS
+    xrandr --addmode "$OUTPUT_NAME" \$MODE_NAME
+fi
+
+# 设置输出分辨率
+xrandr --output "$OUTPUT_NAME" --mode \$MODE_NAME
+echo "[\$(date)] 分辨率设置完成: \$MODE_NAME 到 $OUTPUT_NAME" >> "$LOGFILE"
+EOF
+
+chmod +x "$SCRIPT_PATH"
+
+# ======= 🧷 写入自启动文件 =======
+cat > "$AUTOSTART_PATH" <<EOF
+[Desktop Entry]
+Type=Application
+Exec=$SCRIPT_PATH
+Hidden=false
+NoDisplay=false
+X-GNOME-Autostart-enabled=true
+Name=SetResolution
+Comment=Auto set resolution at startup
+EOF
+
+chmod +x "$AUTOSTART_PATH"
+
+# ======= ✅ 结果输出 =======
+echo "✅ 脚本和自启动项已生成！"
+echo "📜 脚本位置：$SCRIPT_PATH"
+echo "🚀 自启动项：$AUTOSTART_PATH"
+echo "🧾 日志查看：cat $LOGFILE"
+
+```
+
+### 删除自启动
+
+```bash
+rm -rf ~/.local/bin/set-resolution.sh ~/.config/autostart/set-resolution.desktop
+```
