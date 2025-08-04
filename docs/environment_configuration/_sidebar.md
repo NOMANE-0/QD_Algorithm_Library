@@ -6,7 +6,6 @@
   - [WSL2](WSL2.md)
   - [海康工业相机](hikvision.md)
   - [Livox mid360激光雷达](Livox.md)
-  - [Nvidia驱动（Ubuntu）](Nvidia_driver.md)
   - [NUC设置](NUC_setting.md)
   - [固定设备地址](Fixed_equipment_address.md)
   - [MPC开发环境配置](MPC_setting.md)
