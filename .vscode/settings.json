@@ -1,0 +1,8 @@
+{
+  // 设置图片的复制路径
+  // 当在 Markdown 文件中插入图片时，复制图片到 md 文件所在目录的 images 子目录
+    "markdown.copyFiles.destination": {
+  "*.md": "images/${documentBaseName}-${fileName}"
+}
+
+}
