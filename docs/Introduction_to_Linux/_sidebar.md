@@ -10,3 +10,4 @@
   - [Linux零碎教程](Linux_Fragmented_tutorials.md)
   - [Linux报错记录](Linux_Bug_log.md)
   - [开机自启动](autoStart.md)
+  - [关闭 CPU 核心](disable_cpu_core/md)
