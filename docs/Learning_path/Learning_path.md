@@ -1,4 +1,4 @@
-# **学习路线** 	
+# 学习路线
 
 [培训资料汇总](https://gitee.com/slime0rimiru0/2026-rm_training)
 

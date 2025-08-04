@@ -10,8 +10,13 @@
 </head>
 <body>
   <nav>
-    <a href="#/">EN</a>
-    <a href="#/zh-cn/">中文</a>
+    <a href="#/">快速开始</a>
+    <a href="#/Learning_path/">学习路线</a>
+    <a href="#/Technical_Basics_and_Development_Techniques/">技术入门与开发技巧</a>
+    <a href="#/Introduction_to_Linux/">Linux入门</a>
+    <a href="#/environment_configuration/">环境配置</a>
+    <a href="#/Project_Tutorial/">项目教程</a>
+    <a href="#/Others/">其他</a>
   </nav>
   <div id="app"></div>
   <!-- 在 Github 上编辑 -->
@@ -25,7 +30,7 @@
       subMaxLevel: 3,	// 自定义侧边栏后默认不会再生成目录，你也可以通过设置生成目录的最大层级开启这个功能。
       coverpage: true,	// 只在访问主页时加载封面
       auto2top: true,   // 切换页面后是否自动跳转到页面顶部
-
+      relativePath: true, // 启用相对路径
       // 在github上编辑，设置链接
       plugins: [
       EditOnGithubPlugin.create('https://github.com/NOMANE-0/QD_Algorithm_Library/tree/main/docs/')
