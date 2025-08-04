@@ -14,6 +14,7 @@ done
 ```
 
 输出如下
+
 ![alt text](images/disable_cpu_cores-image.png)
 
 ## 关闭核心
