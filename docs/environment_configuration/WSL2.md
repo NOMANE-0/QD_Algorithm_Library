@@ -60,6 +60,45 @@ usbipd detach --busid <busid>
 
 输入`nvidia-smi`，如果有输出就是wsl有驱动了
 
+## 迁移到其他盘
+
+- 先关闭 WSL
+
+```bash
+WSL --shutdown
+```
+
+![alt text](images/WSL2-image.png)
+
+- 在D盘中创建UbuntuWSL文件夹：
+
+![alt text](images/WSL2-image-1.png)
+
+- 以压缩包的形式导出到其他盘
+
+```bash
+wsl --export Ubuntu-20.04 E:\UbuntuWSL\ubuntu-20.04.tar
+```
+
+- 注销原有的linux系统
+
+```bash
+wsl --unregister Ubuntu-20.04
+```
+
+- 查看是否真的注销成功
+
+```bash
+wsl -l -v
+```
+
+- 导入系统
+
+```bash
+# wsl --import <导入的Linux名称> <导入盘的路径> <ubuntu.tar的路径> --version 2 (代表wsl2)
+wsl --import Ubuntu-20.04 E:\UbuntuWSL\ E:\UbuntuWSL\ubuntu-20.04.tar --version 2
+```
+
 ## 常见问题
 
 ### 终端卡顿、无响应
