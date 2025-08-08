@@ -2,6 +2,8 @@
 
 在使用串口或者 USB 相机时，我们会发现有时它的文件位置不是固定的，可能从`/dev/video0`变成`/dev/video2`，为此我们根据设备的独有信息使用 udev 规则将设备绑定要一个固定的位置
 
+## 设备号查看
+
 - 使用`lsusb`查看设备号
 
 ```terminal
@@ -31,6 +33,8 @@ qd2025@qd2025:~/$ udevadm info --attribute-walk /sys/class/tty/ttyUSB0 | grep KE
 
 记录下这里的`KERNELS=="1-2"`（代表USB口位置），不要用`1-2:1.0`，测过了不会生效
 
+## 固定设备
+
 - 在`/etc/udev/rules.d/`下创建`usb.rules`文件，文件名可以自定义，后缀一样即可，输入以下内容
 
 这行的意思是把`/dev/ttyUSB`前缀的设备，同时插在`1-2` USB 口上的，设备识别号为`1a86:7523`连接到`/dev/rm_usb0`文件上
@@ -59,3 +63,10 @@ KERNEL=="ttyACM*", MODE:="0777", SYMLINK+="rm_usb0"
 ```
 
 USB 是 CH340 的串口，ACM 是虚拟串口，我们同一时间只会插入一个设备，但是我们不想每次换设备都改一次串口位置就可以这么写
+
+## 重新加载udev规则
+
+```bash
+sudo udevadm control --reload-rules
+sudo udevadm trigger -v --action=add
+```
