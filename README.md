@@ -41,6 +41,8 @@ docsify serve docs
 
 想添加新文件的话只需要正常在模块下写`.md`就可以，然后在所在目录的`_sidebar.md`里添加索引
 
+> 根目录下的`.vscode`里设置了复制图片会默认把图片放到所在目录的`images`里，如果你使用 vscode 则不需要担心图片路径问题
+
 ### 添加模块
 
 想添加一个新模块只需要在[_navbar.md](docs\_navbar.md)中仿照里面的内容修改
