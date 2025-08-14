@@ -100,7 +100,7 @@ OpenCV 的一些功能需要依赖其他的 apt 包，典型的就是 GUI ，但
 sudo apt install g++-aarch64-linux-gnu gcc-aarch64-linux-gnu
 # 用这行 camke 即可，其他的与正常编译一样
 cmake .. \
-    -DCMAKE_INSTALL_PREFIX=../aarch_64_install \
+    -DCMAKE_INSTALL_PREFIX=../aarch64_install \
     -DWITH_CUDA=OFF \
     -DENABLE_PRECOMPILED_HEADERS=OFF \
     -DCMAKE_TOOLCHAIN_FILE=../platforms/linux/aarch64-gnu.toolchain.cmake \
