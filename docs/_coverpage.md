@@ -1,9 +1,7 @@
-![logo](images/透明logo黑.png) 
+![logo](images/透明logo黑.png ':size=20%')
 
-> 奇点战队算法组的知识库
+> **奇点战队算法组知识库**
 > 
-> - 传承
-> - linux知识
->   - 经验积累
+> <br><br>技术没有黑魔法
 > 
 > 网页基于 [docsify](https://docsify.js.org/#/zh-cn/?id=docsify)
