@@ -14,15 +14,40 @@ sudo apt install libopencv-dev
 
 ### apt 依赖安装
 
-在编译前需安装一些包，以保证一些 GUI 可视化的正常使用
+在编译前需安装一些包，以保证一些功能正常使用，如 GUI 可视化
+
+OpnCV 默认有开启一些功能，像 GUI 可视化这些，但只有它检测到你有装相应的包才会编译进去
 
 ```bash
-sudo apt-get install build-essential libgtk2.0-dev libjpeg-dev  libtiff5-dev libopenexr-dev libtbb-dev libavcodec-dev libavformat-dev libswscale-dev libgtk-3-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev pkg-config
+# 编译依赖 
+sudo apt install git cmake build-essential pkg-config 
+# GUI ，很重要，关系到可视化
+sudo apt install libgtk-3-dev libgtk2.0-dev
+# 视频编码
+sudo apt install libavcodec-dev libavformat-dev libswscale-dev
+# GStreamer
+sudo apt install libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev
+# 图像处理库​​
+sudo apt install libjpeg-dev libpng-dev libtiff-dev libwebp-dev
+# ​​Eigen优化​
+sudo apt install libeigen3-dev     
+# 硬件加速视频解码
+sudo apt install libva-dev
+# 加速编译
+sudo apt install ccache
+# VTK 支持（用于 3D 可视化），1G超大，慎装
+sudo apt install libvtk9-dev
+```
+
+嫌麻烦一条龙命令,不含 VTK
+
+```bash
+sudo apt install git cmake build-essential pkg-config libgtk-3-dev libgtk2.0-dev libavcodec-dev libavformat-dev libswscale-dev libgstreamer1.0-dev libgstreamer-plugins-base1.0-dev libgstreamer-plugins-good1.0-dev libjpeg-dev libpng-dev libtiff-dev libwebp-dev libeigen3-dev libva-dev ccache
 ```
 
 ### 编译
 
-获取源码,`-b`确认拉下来哪个版本
+获取源码，`-b`确认拉下来哪个版本
 
 ```bash
 git clone -b 4.5.4 https://github.com/opencv/opencv.git
