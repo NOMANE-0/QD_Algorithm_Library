@@ -57,10 +57,11 @@ git clone -b 4.5.4 https://github.com/opencv/opencv.git
 
 ```bash
 cd opencv
-mkdir build && build
+mkdir build && cd build
 # 构建
 cmake .. \
     -D CMAKE_BUILD_TYPE=Release \
+    -D BUILD_EXAMPLES=OFF \
     -D CMAKE_INSTALL_PREFIX=/usr/local/opencv4.5.4 \
     -D OPENCV_GENERATE_PKGCONFIG=ON \
     -D BUILD_opencv_python3=ON
@@ -71,11 +72,96 @@ make install
 ```
 
 - `CMAKE_BUILD_TYPE`:构建类型为 ​​Release​​ / Debug
+- `BUILD_EXAMPLES`:编译例程，关闭减少编译开销
 - `CMAKE_INSTALL_PREFIX`:make install 的安装路径
-- `OPENCV_GENERATE_PKGCONFIG`:​生成 pkg-config 的配置文件，对不使用 CMake 进行构建的项目可能很有用
+- `OPENCV_GENERATE_PKGCONFIG`:生成 pkg-config 的配置文件，对不使用 CMake 进行构建的项目可能很有用
 - `BUILD_opencv_python3`:构建 Python3 绑定
 
 > 更多 cmake 可配置选项参见[配置文档](https://docs.opencv.org/4.12.0/db/d05/tutorial_config_reference.html)
+
+## opencv_contrib 编译
+
+> 该库旨在开发所谓的“额外”模块，即贡献的功能。新模块的 API 通常不稳定，而且没有经过充分测试。因此，它们不应作为官方 OpenCV 版本的一部分发布，因为该库需要保持二进制兼容性，并努力提供良好的性能和稳定性。
+>所以，所有新模块都应首先单独开发，并在 opencv_contrib 库中发布。之后，当模块成熟并受到欢迎时，它将被转移到中央 OpenCV 库，由开发团队为其提供生产质量的支持。
+
+使用 opencv_contrib 最主要就是为了它里面的 CUDA 模块，能使用带 CUDA 加速的函数。因为该库是一个 OpenCV 模块，所以是在编译 OpenCV 就基础上附加的
+
+### 前置
+
+要为了 CUDA 编译的话，先保证自己装了显卡驱动、 `NVIDIA CUDA Toolkit` 和 `NVIDIA CUDA Deep Neural Network (cuDNN) library`
+
+### 查看显卡算力
+
+查看显卡型号
+
+```bash
+nvidia-smi -L
+```
+
+然后去[CUDA GPU Compute Capability](https://developer.nvidia.com/cuda-gpus)看你对应显卡的算力（Compute Capability），下面给出一个表参考
+
+| Compute Capability | GeForce/RTX                                                  | Jetson                                                  |
+| ------------------ | ------------------------------------------------------------ | ------------------------------------------------------- |
+| 12.0               | GeForce RTX 5090<br/>GeForce RTX 5080<br/>GeForce RTX 5070 Ti<br/>GeForce RTX 5070<br/>GeForce RTX 5060 Ti<br/>GeForce RTX 5060<br/>GeForce RTX 5050 |                                                         |
+| 8.9                | GeForce RTX 4090<br/>GeForce RTX 4080<br/>GeForce RTX 4070 Ti<br/>GeForce RTX 4070<br/>GeForce RTX 4060 Ti<br/>GeForce RTX 4060<br/>GeForce RTX 4050 |                                                         |
+| 8.7                |                                                              | Jetson AGX Orin<br/>Jetson Orin NX<br/>Jetson Orin Nano |
+| 8.6                | GeForce RTX 3090 Ti<br/>GeForce RTX 3090<br/>GeForce RTX 3080 Ti<br/>GeForce RTX 3080<br/>GeForce RTX 3070 Ti<br/>GeForce RTX 3070<br/>GeForce RTX 3060 Ti<br/>GeForce RTX 3060<br/>GeForce RTX 3050 Ti<br/>GeForce RTX 3050 |                                                         |
+| 7.5                | GeForce GTX 1650 Ti<br/>GeForce RTX 2080 Ti<br/>GeForce RTX 2080<br/>GeForce RTX 2070<br/>GeForce RTX 2060 |                                                         |
+| 7.2                |                                                              | Jetson AGX Xavier<br/>Jetson Xavier NX                  |
+| 6.2                |                                                              | Jetson TX2                                              |
+| 6.1                | GeForce GTX 1080 Ti<br/>GeForce GTX 1080<br/>GeForce GTX 1070 Ti<br/>GeForce GTX 1070<br/>GeForce GTX 1060<br/>GeForce GTX 1050 |                                                         |
+| 5.3                |                                                              | Jetson Nano                                             |
+
+### CUDA 版本编译
+
+!> 记得修改`CUDA_ARCH_BIN`
+
+```bash
+# OpenCV
+git clone https://github.com/opencv/opencv.git
+# opencv_contrib
+git clone https://github.com/opencv/opencv_contrib.git
+mkdir build && cd build
+# cmake
+cmake ../opencv \
+-D CMAKE_BUILD_TYPE=RELEASE \
+-D CMAKE_INSTALL_PREFIX=/usr/local/opencv \
+-D BUILD_EXAMPLES=OFF \
+-D WITH_CUDA=ON \
+-D WITH_CUDNN=ON \
+-D WITH_CUBLAS=ON \
+-D WITH_TBB=ON \
+-D OPENCV_DNN_CUDA=ON \
+-D OPENCV_ENABLE_NONFREE=ON \
+-D HAVE_opencv_python3=ON \
+-D OPENCV_EXTRA_MODULES_PATH=../opencv_contrib/modules \
+-D CUDA_ARCH_BIN=6.1 \
+# install
+make install
+```
+
+- `OPENCV_ENABLE_NONFREE`：编译一些带专利的算法，cuda 使用需要用到
+- `HAVE_opencv_python3`：明确启用对 python3 绑定的支持
+- `OPENCV_EXTRA_MODULES_PATH`：`opencv_contrib/modules`位置
+- `CUDA_ARCH_BIN`：填上自己的显卡算力
+
+### 链接 python 库
+
+注意 python 版本
+
+```bash
+sudo ln -s /usr/local/lib/python3.8/site-packages/cv2 /usr/local/lib/python3.8/dist-packages/cv2
+```
+
+### 验证安装
+
+```bash
+python3 -c "import cv2; cv2.cuda.printCudaDeviceInfo(0)"
+```
+
+![alt text](images/OpenCV-image-2.png)
+
+> 参考教程[Installing OpenCV 4 with CUDA in Ubuntu 22.04](https://medium.com/@juancrrn/installing-opencv-4-with-cuda-in-ubuntu-20-04-fde6d6a0a367)
 
 ## 环境变量
 
@@ -92,12 +178,16 @@ export LD_LIBRARY_PATH=/usr/local/opencv4.5.4/lib:$LD_LIBRARY_PATH
 pkg-config opencv4 --modversion
 ```
 
+![alt text](images/OpenCV-image.png)
 or
 
 ```bash
 cd ~/opencv/samples/cpp/example_cmake # 拉取的源码里的代码
 cmake .
 ```
+
+注意检查 Found OpenCV: 路径是否正确
+![alt text](images/OpenCV-image-1.png)
 
 ## CMaklists.txt
 
