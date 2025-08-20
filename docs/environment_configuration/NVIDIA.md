@@ -25,6 +25,8 @@ sudo apt install linux-headers-$(uname -r)
 在使用时会多次使用到一些自定义参数，为了方便这里设置成环境变量
 
 ```bash
+# 查看 Linux 发行版
+hostnamectl
 # ubuntu2204 ubuntu2404 debian12
 export distro=ubuntu2204
 # x86_64 不要用 amd64 ！
