@@ -127,3 +127,11 @@ sudo apt install nautilus-extension-gnome-terminal
 ## ubuntu修改grub默认启动项
 
 https://zhuanlan.zhihu.com/p/552895466
+
+## ROS2 下 `ros2 topic list`没有响应
+
+输入即可
+
+```bash
+ros2 daemon start
+```
