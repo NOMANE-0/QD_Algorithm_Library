@@ -19,6 +19,14 @@
 
 ---
 
+**PNP算法**
+
+学习资料：[视觉组第六次培训：装甲板位姿解算](https://www.bilibili.com/video/BV1dw411B7Bz)
+
+学习要求：学会 `cv::solvepnp` 函数的使用
+
+---
+
 **线性代数**
 
 学习资料：[【官方双语/合集】线性代数的本质 - 系列合集](https://www.bilibili.com/video/BV1ys411472E)、[【完整版-麻省理工-线性代数】全34讲+配套教材（想学得深入的可以看这个）](https://www.bilibili.com/video/BV1ix411f7Yp)
