@@ -26,3 +26,18 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 clangd 默认会索引根目录（$SRC）和 build（$SRC/build）下的`compile_commands.json`，请确保文件在其中
 
 生成完后在 vscode 中打开文件 clangd 就会自动索引了，第一次编译出来需要一段时间加载索引
+
+## Q&A
+
+Q：
+出现`In included file: 'cmath' file not found`
+
+导致部分文件索引不到
+
+A：
+
+```bash
+sudo apt install libstdc++-12-dev
+```
+
+> [Clang: 'cmath' file not found](https://stackoverflow.com/questions/22752000/clang-cmath-file-not-found)
