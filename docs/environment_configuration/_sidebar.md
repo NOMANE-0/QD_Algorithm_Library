@@ -14,3 +14,4 @@
   - [ROS](ROS.md)
   - [QEMU 模拟器](qemu.md)
   - [NVIDIA](NVIDIA.md)
+  - [Foxglove](Foxglove.md)
