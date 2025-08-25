@@ -7,3 +7,5 @@
 - [项目教程](/Project_Tutorial/)
 - [其他](/Others/)
   - [273经验总结](/Others/273.md)
+  - [开发文档](/Others/开发文档.md)
+  - [开源汇总](/Others/开源汇总.md)
