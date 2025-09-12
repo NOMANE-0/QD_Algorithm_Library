@@ -74,12 +74,20 @@ ROS1 与 ROS2 主要版本支持系统对照表
 sudo apt install ros-humble-desktop
 ```
 
+#### colcon
+
+安装完 ROS 后你会发现没有`colcon`命令，使用下面的命令安装
+
+```bash
+sudo apt install python3-colcon-common-extensions
+```
+
 #### 添加环境变量
 
 注意这里的 humble 需要替换成你的 ROS 版本
 
 ```bash
-echo "source /opt/ros/humble/setup.bash" ~/.bashrc
+echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 ```
 
 > 如果你不是使用`.bash`，请将 `.bash` 替换为你的 shell。可能的值是： `setup.bash` ， `setup.sh` ， `setup.zsh`
@@ -87,7 +95,7 @@ echo "source /opt/ros/humble/setup.bash" ~/.bashrc
 ---
 
 > [中科大源](https://mirrors.ustc.edu.cn/help/rosdistro.html)
-> 
+>
 > [ROS Humble 官方安装教程](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html)
 
 ## 源码编译安装
