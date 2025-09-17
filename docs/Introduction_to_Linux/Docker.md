@@ -18,6 +18,12 @@ wget http://fishros.com/install -O fishros && . fishros
 
 ![鱼香ros](images/image-20250722140550329.png)
 
+安装后还需要将用户加入 docker 用户组才能用 docker 命令
+
+```bash
+sudo usermod -aG docker $USER
+```
+
 ## 常用命令
 
 ```terminal

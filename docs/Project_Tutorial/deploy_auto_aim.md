@@ -44,7 +44,7 @@
 # 网络克隆下来
 git clone git@gitee.com:ouzhigui/rmvision2025.git ~/rmvision2025
 # scp 传文件
-spc -r rmvision2025/ qidian@192.168.137.x:~/
+scp -r rmvision2025/ qidian@192.168.137.x:~/
 ```
 
 > 由于是非公开仓库，需要配置密钥才能访问，配置教程见[SSH](/Introduction_to_Linux/SSH)里 ssh密钥部分
@@ -60,7 +60,7 @@ docker pull slirute/qidian:latest
 如果在自己电脑有镜像了的话可以用这个方法传，省去外网下载
 
 ```bash
-docker save slirute/qidian:latest | ssh qidian@192.168.1.x "docker load"
+docker save slirute/qidian:latest | ssh qidian@192.168.137.x "docker load"
 ```
 
 #### 构建容器
