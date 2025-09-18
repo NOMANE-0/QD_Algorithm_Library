@@ -187,6 +187,7 @@ cmake .
 ```
 
 注意检查 Found OpenCV: 路径是否正确
+
 ![alt text](images/OpenCV-image-1.png)
 
 ## CMaklists.txt
@@ -194,14 +195,14 @@ cmake .
 ```cmake
 cmake_minimum_required(VERSION 3.0.0) 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
-project(OpenCV) 
+project(OpenCV_project) 
 
 set(OpenCV_DIR /usr/local/opencv4.5.4/lib/cmake/opencv4/)   # 如果你自定义了安装路径要加
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} ) 
 
-add_executable( ${PROJECT_NAME} *.cpp ) 
-target_link_libraries( ${PROJECT_NAME} ${OpenCV_LIBS} )
+add_executable( OpenCV_project *.cpp ) 
+target_link_libraries( OpenCV_project ${OpenCV_LIBS} )
 ```
 
 ## 交叉编译

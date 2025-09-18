@@ -107,7 +107,7 @@ Termination:                      CONVERGENCE (Function tolerance reached. |cost
 
 ## CMakeLists.txt
 
-```bash
+```cmake
 make_minimum_required(VERSION 3.5)
 
 project(helloworld)
