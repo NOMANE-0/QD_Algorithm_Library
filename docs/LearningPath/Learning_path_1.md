@@ -2,44 +2,45 @@
 
 ## 学习内容
 
-**C++** （重点编程语⾔）
+### C++ （重点编程语⾔）
+
+c++ 是算法组开发项目主要使用的编程语言
 
 学习参考：[黑马程序员匠心之作|C++教程从0到1入门编程,学习编程不再难](https://www.bilibili.com/video/BV1et411b73Z)
 
-学习进度：10⽉中旬（开始培训的时间）到12⽉初左右 ⾄少学到类与对象—友元这⼀部分 （具体到P120） 之后寒假继续学习⾄容器vector（P203 ）
+学习进度：10⽉中旬（开始培训的时间）到12⽉初左右 ⾄少学到类与对象—友元这⼀部分 （具体到P120） 之后继续学习⾄容器vector（P203 ）
 
 学习要求：跟着视频敲代码，复现后⾃⼰尝试模仿着写，可以做笔记记录
 
 学习⽬标：学会⾯向对象编程，简单来说就是多用Class类
 
----
+### Ubuntu（开发系统）
 
-**Ubuntu**（开发系统）
-学习参考：[Windows 和 Ubuntu 双系统的安装和卸载](https://www.bilibili.com/video/BV1554y1n7zv/)
+Ubuntu 是基于 Linux 内核的发行版，该系统便于项目开发，是机器人开发主要使用的系统，培训学习均是基于 Ubuntu 系统进行的
 
-学习要求：熟悉安装的流程,系统相关指令等
+系统安装：[Windows11 安装 Ubuntu](https://www.bilibili.com/video/BV1Cc41127B9)，执行到`P19 引导菜单的默认项`即可
 
-培训学习均是基于 Ubuntu 系统
+学习要求：熟悉安装的流程,多使用 Ubuntu ，将 windows 的操作在 ubutnu 上实现，学会使用终端来完成操作文件、安装软件等常用操作
 
----
+### CMake（编译⼯具）
 
-**CMake**（编译⼯具）
+将代码转换成可执行文件的工具，便于大型项目开发的工具
+
 学习参考：[CMake 保姆级教程](https://subingwen.cn/cmake/CMake-primer/)
 
-学习要求：在vscode中下载CMake和CMake Tools⼯具；会编写基本的CMakeLists⽂件；
+学习要求：会编写基本的CMakeLists⽂件，能够理解 CMake 语句的意思
 
----
+### Markdown (常用的文本语法)
 
-**Markdown** (常用的文本语法)
+markdown的语法，是许多程序员爱用的一种文字编辑语言，很多网站的编写都支持该语法，该语法让人不用操心文字排版，让人更专注在内容编写上
 
 学习参考：[8分钟让你快速掌握Markdown](https://www.bilibili.com/video/BV1JA411h7Gw)、[软件下载](https://github.com/wyf9661/typora-free)
 
 学习要求：在使用中熟悉 Markdown 指令
-markdown的语法，是许多程序员爱用的一种文字编辑语言，很多网站的编写都支持该语法
 
----
+### Git (代码托管⼯具)
 
-**Git** (代码托管⼯具)
+管理代码的工具
 
 学习参考：[给傻子的Git教程（国内版）](https://www.bilibili.com/video/BV1bRN2enEtV)
 
