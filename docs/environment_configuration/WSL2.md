@@ -8,13 +8,13 @@ WSL2 (*Windows Subsystem for Linux* ) 是Windows上运行Linux发行版的最新
 
 - 以管理员身份启动``cmd`或`powershell`
 
-```terminal
+```bash
 wsl --install
 ```
 
 - 查看可安装发行版
 
-```terminal
+```bash
 wsl --list --online
 ```
 
@@ -22,7 +22,7 @@ wsl --list --online
 
 - 选择想安装的发行版的``NAME`
 
-```terminal
+```bash
 wsl --install -d <Name>
 ```
 
@@ -34,13 +34,13 @@ wsl --install -d <Name>
 
 ### 安装 USBIPD-WIN 项目
 
-```terminal
+```bash
 winget install --interactive --exact dorssel.usbipd-win
 ```
 
 ### 连接 USB 设备
 
-```terminal
+```bash
 # 显示 USB 设备
 usbipd list
 

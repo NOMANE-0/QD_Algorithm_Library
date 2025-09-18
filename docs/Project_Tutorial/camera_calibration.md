@@ -4,7 +4,7 @@
 
 ## 依赖
 
-```terminal
+```bash
 sudo apt install ros-${ROS_DISTRO}-camera-calibration
 sudo apt install ros-${ROS_DISTRO}-camera-info-manager
 sudo apt install ros-${ROS_DISTRO}-launch-testing-ament-cmake
@@ -16,7 +16,7 @@ sudo apt install ros-${ROS_DISTRO}-launch-testing-ament-cmake
 
 ### 海康工业相机
 
-```terminal
+```bash
 git clone https://github.com/chenjunnn/ros2_hik_camera.git
 cd ros2_hik_camera
 colcon build --symlink-install
@@ -26,7 +26,7 @@ ros2 launch hik_camera hik_camera.launch.py
 
 ### USB 相机
 
-```terminal
+```bash
 git clone https://gitee.com/slime0rimiru0/usb_cam.git
 cd usb_cam
 colcon build --symlink-install
@@ -36,7 +36,7 @@ ros2 launch usb_cam usb_cam.launch.py
 
 ## 确认图像话题名称
 
-```terminal
+```bash
 # 确认话题发布
 ros2 topic list
 # 看能否订阅话题
@@ -45,7 +45,7 @@ ros2 topic hz /image_raw
 
 ## 启动相机标定节点
 
-```terminal
+```bash
 ros2 run camera_calibration cameracalibrator --size 8x8 --square 0.035 image:=/image_raw camera:=/image_raw --no-service-check
 ```
 

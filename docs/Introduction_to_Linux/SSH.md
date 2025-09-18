@@ -6,7 +6,7 @@ ssh是一种加密的网络通信协议，常用远程操控主机
 
 ssh客户端一般都自动装了，而服务端则需要自己安装。
 
-```terminal
+```bash
 # 安装服务端
 sudo apt install openssh-server
 
@@ -18,7 +18,7 @@ sudo systemctl status ssh
 
 `sudo systemctl status ssh`输出如下
 
-```terminal
+```bash
 ssh.service - OpenBSD Secure Shell server
      Loaded: loaded (/lib/systemd/system/ssh.service; enabled; preset: enabled)
      Active: active (running) since Wed 2024-05-08 07:52:50 UTC; 24min ago
@@ -44,7 +44,7 @@ May 08 07:53:22 radxa-zero sshd[783]: pam_env(sshd:session): deprecated reading 
 - 如果 `Active` 状态为 `active (running)`，则 SSH 处于运行状态。
 - 如果 `Active` 状态为 `inactive (dead)`，则 SSH 已停止，即服务未运行，需要重新启动。
 
-```terminal
+```bash
 # 启动ssh服务
 sudo systemctl restart ssh
 
@@ -64,7 +64,7 @@ sudo systemctl enable --now ssh
 
 第一次连接会弹出以下信息，输入`yes`即可
 
-```terminal
+```bash
 The authenticity of host 'gitee.com (180.76.198.225)' can't be established.
 ED25519 key fingerprint is SHA256:+ULzij2u99B9eWYFTw1Q4ErYG/aepHLbu96PAUCoV88.
 This key is not known by any other names
@@ -77,7 +77,7 @@ Are you sure you want to continue connecting (yes/no/[fingerprint])?
 
 密钥分成公钥和私钥，公钥是给别人的，私钥是自己独有，泄露了相当于泄露密码了
 
-```terminal
+```bash
 # 生成ssh密钥，一直 Enter 即可
 ssh-keygen -t rsa
 

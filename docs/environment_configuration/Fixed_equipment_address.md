@@ -6,7 +6,7 @@
 
 - 使用`lsusb`查看设备号
 
-```terminal
+```bash
 qd2025@qd2025:~/$ lsusb
 Bus 001 Device 001: ID 1d6b:0002 Linux Foundation 2.0 root hub
 Bus 001 Device 003: ID 1a86:7523 QinHeng Electronics CH340 serial converter
@@ -21,7 +21,7 @@ Bus 002 Device 002: ID 2bdf:0001 Hikrobot MV-CS016-10UC
 
 - 使用`udevadm info --attribute-walk /sys/class/tty/ttyUSB1 | grep KERNELS`查看设备更多信息
 
-```terminal
+```bash
 qd2025@qd2025:~/$ udevadm info --attribute-walk /sys/class/tty/ttyUSB0 | grep KERNELS
     KERNELS=="ttyUSB0"
     KERNELS=="1-2:1.0"
@@ -39,7 +39,7 @@ qd2025@qd2025:~/$ udevadm info --attribute-walk /sys/class/tty/ttyUSB0 | grep KE
 
 这行的意思是把`/dev/ttyUSB`前缀的设备，同时插在`1-2` USB 口上的，设备识别号为`1a86:7523`连接到`/dev/rm_usb0`文件上
 
-```terminal
+```bash
 KERNEL=="ttyUSB*", KERNELS=="1-2", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7523", MODE:="0777", SYMLINK+="rm_usb0"
 ```
 
@@ -57,7 +57,7 @@ KERNEL=="ttyUSB*", KERNELS=="1-2", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7
 
 同理，如果只有一个设备，但是名字会变的话，我们可以这么写
 
-```terminal
+```bash
 KERNEL=="ttyUSB*", MODE:="0777", SYMLINK+="rm_usb0"
 KERNEL=="ttyACM*", MODE:="0777", SYMLINK+="rm_usb0"
 ```

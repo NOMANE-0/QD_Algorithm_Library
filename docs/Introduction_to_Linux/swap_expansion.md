@@ -4,7 +4,7 @@
 
 运行以下命令查看当前的 Swap 配置
 
-```terminal
+```bash
 # 查看内存和swap
 free -h
 
@@ -14,7 +14,7 @@ sudo swapon --show
 
 输出示例
 
-```terminal
+```bash
 radxa@rock-5b:~/$ free -h
                total        used        free      shared  buff/cache   available
 Mem:           3.8Gi       508Mi       2.8Gi       101Mi       741Mi       3.3Gi
@@ -28,7 +28,7 @@ NAME      TYPE SIZE USED PRIO
 
 # **删除旧的 Swap 文件**
 
-```terminal
+```bash
 sudo swapoff -v /swapfile  # 停用 Swap
 sudo rm -f /swapfile       # 删除旧的 Swap 文件
 ```
@@ -37,7 +37,7 @@ sudo rm -f /swapfile       # 删除旧的 Swap 文件
 
 - 法一：使用 `fallocate`
 
-```terminal
+```bash
 sudo fallocate -l 4G /swapfile  # 创建 4GB Swap（可替换为 8G、16G 等）
 sudo chmod 600 /swapfile       # 设置权限
 sudo mkswap /swapfile          # 格式化为 Swap
@@ -46,7 +46,7 @@ sudo swapon /swapfile          # 启用 Swap
 
 - 法二：**使用 `dd`**
 
-```terminal
+```bash
 sudo dd if=/dev/zero of=/swapfile bs=1M count=4096  # 4GB (count=8192 是 8GB)
 sudo chmod 600 /swapfile
 sudo mkswap /swapfile
@@ -57,12 +57,12 @@ sudo swapon /swapfile
 
 编辑 `/etc/fstab`，确保系统启动时自动挂载 Swap
 
-```terminal
+```bash
 sudo nano /etc/fstab
 ```
 
 在末尾添加
 
-```terminal
+```bash
 /swapfile none swap sw 0 0
 ```

@@ -18,7 +18,7 @@ vscode 安装 clangd 扩展
 
 在项目的`CMakeLists.txt`中添加下面一行即可,或者构建 cmake 时`cmake -DCMAKE_EXPORT_COMPILE_COMMANDS=1`
 
-```terminal
+```bash
 ## Export compile commands for clangd
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 ```

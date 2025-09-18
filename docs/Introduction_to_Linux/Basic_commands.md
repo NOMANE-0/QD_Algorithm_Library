@@ -4,7 +4,7 @@
 
 - `cd`    改变当前目录环境
 
-```terminal
+```bash
 # 返回用户目录
 cd 
 cd ~
@@ -18,7 +18,7 @@ cd /
 
 - `rm`    删除文件
 
-```terminal
+```bash
 # 删除单个文件
 rm file.txt
 
@@ -34,7 +34,7 @@ rm -rf dir
 
 - `cp`    复制文件，兼重命名
 
-```terminal
+```bash
 # 复制文件
 cp file1 file2
 
@@ -44,7 +44,7 @@ cp -r dir1 dir2
 
 - `mv`    移动文件,兼重命名
 
-```terminal
+```bash
 # 移动文件
 mv old.txt new.txt
 
@@ -54,7 +54,7 @@ mv dir /target/path
 
 - `ls`    列出目录内容
 
-```terminal
+```bash
 # 列出目录内容
 ls [路径]
 
@@ -67,13 +67,13 @@ ls -a [路径]
 
 - `touch`    创建文件
 
-```terminal
+```bash
 touch file.txt
 ```
 
 - `mkdir`    创建文件夹
 
-```terminal
+```bash
 # 创建目录
 mkdir dir
 
@@ -85,7 +85,7 @@ mkdir -p parent/child
 
 - `cat`    查看文件内容
 
-```terminal
+```bash
 # 在终端把文件内容打印出来
 cat file.txt
 
@@ -120,7 +120,7 @@ cat file1 file2 > merged.txt
 
 - `chmod`    修改文件权限
 
-```terminal
+```bash
 # 赋予文件可执行权限
 sudo chmod +x file.sh
 
@@ -130,7 +130,7 @@ sudo chmod 777 file
 
 - `chown`    修改文件所有者
 
-```terminal
+```bash
 sudo chown $USER file
 ```
 
@@ -138,7 +138,7 @@ sudo chown $USER file
 
 - `apt`    包管理工具
 
-```terminal
+```bash
 # 更新软件源
 sudo apt update
 
@@ -153,7 +153,7 @@ sudo apt remove <package> --purge
 
 - `dpkg`    `.deb`包安装
 
-```terminal
+```bash
 # 安装
 sudo dpkg -i package.deb
 
@@ -165,7 +165,7 @@ sudo dpkg -r package
 
 - `tar`    打包/解压`.tar.gz`文件
 
-```terminal
+```bash
 # 压缩 把 dir/ 目录压缩成 archive.tar.gz
 tar -czvf archive.tar.gz dir/
 
@@ -175,7 +175,7 @@ tar -zxvf archive.tar.gz
 
 - `unzip`    解压`.zip`文件
 
-```terminal
+```bash
 # 使用前需安装
 sudo apt install unzip
 

@@ -14,7 +14,7 @@ sudo nano /etc/rc.local
 
 默认内容如下,在`exit 0`前`#!/bin/sh -e`后写命令
 
-```terminal
+```bash
 #!/bin/sh -e
 #
 # rc.local
@@ -39,7 +39,7 @@ exit 0
 - 在`/etc/systemd/system/`目录下新建服务`demo.server`
 - 编写`server`文件,自己要准备想自启动的 shell 脚本
 
-```terminal
+```bash
 [Unit]
 Description=            # 描述该服务的用途
 After=network.target    # 在网络服务启动后运行
@@ -60,19 +60,19 @@ WantedBy=multi-user.target  # 该服务会在系统进入多用户模式（正�
 
 - 更新 systemd 配置
 
-```terminal
+```bash
 sudo systemctl daemon-reload
 ```
 
 - 启用服务
 
-```terminal
+```bash
 sudo systemctl enable demo.server
 ```
 
 - 启动服务
 
-```terminal
+```bash
 sudo systemctl start demo.server
 ```
 

@@ -38,7 +38,7 @@ sudo nano /etc/systemd/system/disable-cpu-cores.service
 
 - 服务内容
 
-```terminal
+```bash
 [Unit]
 Description=Disable CPU cores at boot
 After=sysinit.target

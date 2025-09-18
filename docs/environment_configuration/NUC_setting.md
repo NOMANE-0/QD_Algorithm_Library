@@ -52,7 +52,7 @@ Sustained持续功率选60，Burst Mode爆发模式65(超过65w进入)，Time Wi
 
 linux系统里是可以主动控制cpu核心的使用的
 
-```terminal
+```bash
 # 查看 cpu 频率，确认要关闭的核
 lscpu -e
 # 关闭 cpu 核心

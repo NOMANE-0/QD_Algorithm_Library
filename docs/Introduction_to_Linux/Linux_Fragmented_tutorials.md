@@ -115,7 +115,7 @@ hwclock --localtime --systohc     //将本地时间更新到硬件上
 ```Shell
 sudo apt update
 
-sudo apt install nautilus-extension-gnome-terminal
+sudo apt install nautilus-extension-gnome-bash
 
 //注销后重新登录
 ```

@@ -18,7 +18,7 @@
 
 ## 安装livox sdk
 
-```terminal
+```bash
 # 安装依赖包CMAKE
 sudo apt install cmake
 
@@ -39,7 +39,7 @@ https://www.livoxtech.com/downloads
 
 解压后进入目录，运行
 
-```terminal
+```bash
 sh ./LivoxViewer2.sh  
 ```
 
@@ -51,7 +51,7 @@ sh ./LivoxViewer2.sh
 
 克隆源代码
 
-```terminal
+```bash
 git clone https://github.com/Livox-SDK/livox_ros_driver2.git
 ```
 
@@ -59,7 +59,7 @@ git clone https://github.com/Livox-SDK/livox_ros_driver2.git
 
 终端进入到/src/livox_ros_driver2目录下
 
-```terminal
+```bash
 source /opt/ros/humble/setup.sh
 ./build.sh humbl
 ```

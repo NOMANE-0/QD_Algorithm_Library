@@ -6,7 +6,7 @@ OpenCV是一个C++的库。opnencv中有两个库，一个是[基础库`opencv`]
 
 使用`apt`安装预编译好的opencv，版本为4.5.4，想要更新的话需要自己编译
 
-```terminal
+```bash
 sudo apt install libopencv-dev
 ```
 

@@ -9,7 +9,7 @@ Ceres Solver 是一个开源 C++ 库，用于建模和解决大型复杂的优�
 
 ### apt安装
 
-```terminal
+```bash
 sudo apt install libceres-dev
 ```
 
@@ -17,7 +17,7 @@ sudo apt install libceres-dev
 
 - 安装依赖
 
-```terminal
+```bash
 # CMake
 sudo apt-get install cmake
 # google-glog + gflags
@@ -32,13 +32,13 @@ sudo apt-get install libsuitesparse-dev
 
 - 拉取源码
 
-```terminal
+```bash
 git clone -b 2.2.0 https://github.com/ceres-solver/ceres-solver.git
 ```
 
 - 编译安装
 
-```terminal
+```bash
 cd ceres-solver 
 mkdir build && cd build
 cmake ..
@@ -48,13 +48,13 @@ make install
 
 - 测试
 
-```terminal
+```bash
 bin/simple_bundle_adjuster ../ceres-solver-2.2.0/data/problem-16-22106-pre.txt
 ```
 
 输出结果应该是这样的
 
-```terminal
+```bash
 iter      cost      cost_change  |gradient|   |step|    tr_ratio  tr_radius  ls_iter  iter_time  total_time
    0  4.185660e+06    0.00e+00    1.09e+08   0.00e+00   0.00e+00  1.00e+04        0    2.18e-02    6.57e-02
    1  1.062590e+05    4.08e+06    8.99e+06   0.00e+00   9.82e-01  3.00e+04        1    5.07e-02    1.16e-01
@@ -107,7 +107,7 @@ Termination:                      CONVERGENCE (Function tolerance reached. |cost
 
 ## CMakeLists.txt
 
-```terminal
+```bash
 make_minimum_required(VERSION 3.5)
 
 project(helloworld)
@@ -125,7 +125,7 @@ target_link_libraries(helloworld Ceres::ceres)
 
 修改cmakelist:链接ceres库时使用``CERES_LIBRARIES`而不是`CERES_LIBS`
 
-```terminal
+```bash
 add_executable(myCeres myCeres.cpp)
 target_link_libraries(myCeres ${OpenCV_LIBS} ${CERES_LIBRARIES})
 ```

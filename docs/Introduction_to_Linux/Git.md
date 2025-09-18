@@ -13,7 +13,7 @@ Git 是一个免费且开源的分布式版本控制系统旨在处理从小到�
 
 ### 克隆
 
-```terminal
+```bash
 # 克隆远程仓库到本地（常用）
 git clone <repo_url>
 
@@ -23,7 +23,7 @@ git clone -b <branch> <repo_url>
 
 ### 本地仓库
 
-```terminal
+```bash
 # 初始化当前目录为 Git 仓库
 git init
 
@@ -47,7 +47,7 @@ git pull
 
 编译时会产生很多文件，这些文件会被git记录下来，造成臃肿，我们并不希望提交的时候提交这些编译产物，因此需要屏蔽他们。在git中，可以通过创建`.gitignore`文件，在里面写入不想要记录的文件名来屏蔽
 
-```terminal
+```bash
 touch .gitignore
 
 # 文件内容举例

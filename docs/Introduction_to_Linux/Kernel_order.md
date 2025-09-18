@@ -2,7 +2,7 @@
 
 - 编辑`grub`文件
 
-```terminal
+```bash
 sudo vim /etc/default/grub
 
 #修改 GRUB_DEFAULT=0 ，
@@ -13,6 +13,6 @@ GRUB_SAVEDEFAULT=true
 
 - 更新`grub`
 
-```terminal
+```bash
 sudo update-grub
 ```
