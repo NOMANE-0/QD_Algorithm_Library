@@ -12,7 +12,7 @@ docker的安装分`Docker Engine`和`Docker Desktop`两种，这里只讲`Docker
 
 输入以下命令，选择docker安装
 
-```terminal
+```bash
 wget http://fishros.com/install -O fishros && . fishros
 ```
 
@@ -26,7 +26,7 @@ sudo usermod -aG docker $USER
 
 ## 常用命令
 
-```terminal
+```bash
 # 拉取镜像
 docker pull <镜像名:版本>
 
@@ -55,14 +55,21 @@ docker attach <容器名>
 # 容器开机自启动
 docker container update --restart=always <容器名>
 
+# 将镜像打包成压缩文件
+docker save <镜像名:版本> > xxx.tar
 
+# 通过压缩包加载镜像
+docker load < xxx.tar
+
+# 重命名镜像名， TAG 由 docker images 看到
+docker tag <TAG> <新镜像名:新版本>
 ```
 
 ## 容器构建
 
 基础的容器构建命令如下
 
-```terminal
+```bash
 docker run <镜像名:版本>
 ```
 
@@ -70,7 +77,7 @@ docker run <镜像名:版本>
 
 下面给出一条构建命令来讲解
 
-```terminal
+```bash
 docker run -it --name rv_runtime_ \
 --privileged  -p 2222:22 -p 8765:8765 --restart always \
 -v /dev:/dev -v $HOME/.ros:/root/.ros -v ~/rmvision2025:/ros_ws \
@@ -95,7 +102,7 @@ bash
 
 ## 已有镜像
 
-```terminal
+```bash
 # 2024赛季使用镜像
 docker pull shark277/qidian:1.0
 
@@ -138,7 +145,7 @@ ros2 launch foxglove_bridge foxglove_bridge_launch.xml
 
 ### 无法开机自启loaded failed failed LSB
 
-```terminal
+```bash
 systemctl list-units --type=service # 查看已启动服务
 # 出现如下则本教程适用
 docker.service
@@ -147,7 +154,7 @@ loaded failed failed  LSB: Create lightweight, portable, self-sufficient contain
 
 运行`wget -qO- ``https://get.docker.com/`` | sh`即可解决
 
-```terminal
+```bash
 systemctl list-unit-files | grep docker //查看是否自启动
 
 systemctl enable docker.service //运行开机自启
