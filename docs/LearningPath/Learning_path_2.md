@@ -22,6 +22,6 @@
 
 ## 线性代数
 
-学习资料：[【官方双语/合集】线性代数的本质 - 系列合集](https://www.bilibili.com/video/BV1ys411472E)、[【完整版-麻省理工-线性代数】全34讲+配套教材（想学得深入的可以看这个）](https://www.bilibili.com/video/BV1ix411f7Yp)
+学习资料：[【官方双语/合集】线性代数的本质 - 系列合集](https://www.bilibili.com/video/BV1ys411472E/)、[【完整版-麻省理工-线性代数】全34讲+配套教材（想学得深入的可以看这个）](https://www.bilibili.com/video/BV1ix411f7Yp)
 
 学习要求：理解线性代数的本质，理解线性代数在空间变换、坐标变换上的应用
