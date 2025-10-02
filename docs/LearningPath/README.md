@@ -4,6 +4,6 @@
 
 ## 相关资料
 
-[25赛季培训汇总](https://gitee.com/ouzhigui/2025-algorithm-training?source=header_my_projects)
+[25赛季培训汇总](https://gitee.com/ouzhigui/2025-algorithm-training)
 
-[26赛季培训汇总](https://gitee.com/slime0rimiru0/2026-rm_training?source=header_my_projects)
+[26赛季培训汇总](https://gitee.com/ouzhigui/2026-algorithm-training)
