@@ -4,7 +4,7 @@
 
 ## 本地使用指南
 
-- 使用cmd输入命令看有没有输出版本号，没有需要去安装`Node.js`和`npm`
+- 使用cmd输入命令看有没有输出版本号，没有需要去安装[`Node.js`和`npm`](https://nodejs.org/zh-cn/download)
 
 ```bash
 node -v
