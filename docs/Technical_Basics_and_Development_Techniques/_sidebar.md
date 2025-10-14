@@ -13,3 +13,4 @@
     - [YOLOv5学习](yolov5_learning.md)
     - [YOLOv8学习](yolov8_learning.md)
     - [深度学习基础](Fundamentals_of_Deep_Learning.md)
+  - [海康工业相机驱动](hik_driver.md)
