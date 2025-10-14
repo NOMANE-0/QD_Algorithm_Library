@@ -1,6 +1,6 @@
 # swap分区扩容
 
-# 查看当前swap
+## 查看当前swap
 
 运行以下命令查看当前的 Swap 配置
 
@@ -26,14 +26,14 @@ NAME      TYPE SIZE USED PRIO
 /swapfile file   8G   0B   -2
 ```
 
-# **删除旧的 Swap 文件**
+## 删除旧的 Swap 文件
 
 ```bash
 sudo swapoff -v /swapfile  # 停用 Swap
 sudo rm -f /swapfile       # 删除旧的 Swap 文件
 ```
 
-# **创建新的 Swap 文件**
+## 创建新的 Swap 文件
 
 - 法一：使用 `fallocate`
 
@@ -53,7 +53,7 @@ sudo mkswap /swapfile
 sudo swapon /swapfile
 ```
 
-# 永久生效swap
+## 永久生效swap
 
 编辑 `/etc/fstab`，确保系统启动时自动挂载 Swap
 
@@ -65,4 +65,18 @@ sudo nano /etc/fstab
 
 ```bash
 /swapfile none swap sw 0 0
+```
+
+## 修改 swap 的利用率
+
+`swappiness`是一个内核参数，用于控制系统在什么时候将数据从内存移动到交换空间。它的值范围是 0 到 100，值越低，系统越倾向于使用物理内存而不是交换空间。默认值通常是 60
+
+```bash
+# 查看利用率
+cat /proc/sys/vm/swappiness
+# 临时修改
+sudo sysctl vm.swappiness=10
+# 永久修改,修改 vm.swappiness=10
+sudo nano /etc/sysctl.conf
+sudo sysctl -p 
 ```
