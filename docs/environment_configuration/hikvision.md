@@ -16,6 +16,12 @@ MVS 是海康的机器视觉工业相机客户端，里面包含了相机测试�
 
 [机器视觉工业相机客户端MVS V3.0.1 (Linux)](https://www.hikrobotics.com/cn2/source/support/software/MVS_STD_V3.0.1_241128.zip)
 
+```bash
+# 打开MVS
+cd /opt/MVS/bin
+./MVS
+```
+
 ## Runtime
 
 Runtime 是运行海康相机的运行库，仅包含基础的驱动和二进制库文件
