@@ -24,6 +24,44 @@ wget http://fishros.com/install -O fishros && . fishros
 sudo usermod -aG docker $USER
 ```
 
+- 法二：Docker Engine 安装（官方）
+
+环境：Ubuntu
+
+卸载系统自带 docker
+
+```bash
+for pkg in docker.io docker-doc docker-compose podman-docker containerd runc; do sudo apt-get remove $pkg; done
+```
+
+添加 docker 仓库
+
+```bash
+# 加入密钥
+sudo apt-get update
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# 加入资源库
+echo \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian \
+  $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | \
+  sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+sudo apt-get update
+```
+
+安装 docker
+
+```bash
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+# 添加用户到 docker 组
+sudo usermod -aG docker $USER
+```
+
+> 更多安装信息请看[docker install](https://docs.docker.com/engine/install/)
+
 ## 常用命令
 
 ```bash
@@ -78,6 +116,8 @@ docker save <镜像名:版本> | ssh user@ip "docker load"
 ```
 
 ## 容器构建
+
+拥有一个 docker 镜像（image）后，想使用它就需要构建一个容器（container），相当于镜像是一个模板，每次使用时基于模板创建一个叫容器的虚拟机
 
 基础的容器构建命令如下
 

@@ -131,7 +131,7 @@ sudo chmod 777 file
 - `chown`    修改文件所有者
 
 ```bash
-sudo chown $USER file
+sudo chown -R $USER file 
 ```
 
 ## 软件包管理
@@ -184,5 +184,5 @@ unzip file.zip
 ```
 
 > - 在以上的使用中，都可以使用  \*.txt 这种形式来指代全部txt文件
-> 
+>
 > - 每个命令都有许多的命令用法，这里只列出常用的命令用法
