@@ -4,17 +4,17 @@
 
 如图，航空插接雷达，网线接电脑，功能线可以暂时不需要管。
 
-<img title="" src="images/2025-07-23-16-36-39-image.png" alt="2025-07-23-16-36-39-image" data-align="center" width="525">
+![img](images/2025-07-23-16-36-39-image.png)
 
 供电非常重要，雷达需要稳定的外部供电，电源参照以下设计：
 
-<img title="" src="images/2025-07-23-16-38-14-image.png" alt="2025-07-23-16-38-14-image" width="649" data-align="center">
+![img](images/2025-07-23-16-38-14-image.png)
 
 ## IP设置
 
 在设置中将有线IP地址设为`192.168.1.50`，子网掩码`255.255.255.0`，网关`192.168.1.1`。
 
-<img title="" src="images/2025-07-23-16-35-50-image.png" alt="2025-07-23-16-35-50-image" width="628" data-align="center">
+![img](images/2025-07-23-16-35-50-image.png)
 
 ## 安装livox sdk
 
