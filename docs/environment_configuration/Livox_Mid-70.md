@@ -67,7 +67,7 @@ cmake -DCMAKE_CXX_FLAGS="-fPIC" \
       -DCMAKE_POSITION_INDEPENDENT_CODE=ON \
       ..
 
-make j-8
+make -j8
 
 sudo make install
 
