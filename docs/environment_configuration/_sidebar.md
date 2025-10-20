@@ -5,7 +5,6 @@
   - [Ceres](Ceres.md)
   - [WSL2](WSL2.md)
   - [海康工业相机](hikvision.md)
-  - [Livox Mid-70激光雷达](Livox_Mid-70.md)
   - [Livox mid360激光雷达](Livox.md)
   - [NUC设置](NUC_setting.md)
   - [固定设备地址](Fixed_equipment_address.md)
