@@ -1,155 +1,186 @@
 # 串口通信
 
-在项目协作中，算法组一般担当数据处理的工作，然后将信息发给电控的单片机做控制，为了将信息发给电控，就需要使用到串口通信
+## 1\. 为什么使用串口通信？
 
-与电控通信需要一个 `USB 转串口外设`，常用的有`CH340`和`USB线`，它的主要功能是在电脑的 USB 接口和设备的串口之间建立一个翻译通道，像电控使用的是串口语言，电脑使用的是 USB 协议，听不懂电控发来的消息，这时就需要一个翻译操作
+在项目协作中，**算法组**通常负责数据处理和决策，并将结果发送给**电控系统（单片机）执行控制动作。为了实现这种跨系统的信息传递，我们必须使用串口通信（Serial Communication）**。
 
-- `串口`：全称串行接口，是一种逐位 发送和接收数据的计算机接口。顾名思义，数据像排队一样，一个接一个地按顺序传输
-- `CH340`：是一个常用的串口转USB模块
-- `USB线`：指 type-c / USB-A 转 micro USB / type-c 线，电控会使用一种名为虚拟串口的技术，将串口信息通过单片机上的 USB 口发送电脑能理解的 USB 协议
+### 核心概念
+
+  * **串口（Serial Port/Interface）：** 全称串行接口，是一种计算机接口，数据**逐位（bit-by-bit）顺序传输**。想象数据像在排队一样，一位接一位地按顺序发送和接收。
+
+## 2\. 建立通信：硬件与协议转换
+
+电脑和电控设备使用不同的通信协议：
+
+  * **电控设备**使用**串口协议**（例如 TTL 电平）。
+  * **电脑**使用 **USB 协议**。
+
+因此，我们需要一个“翻译官”来连接设备并转换协议。
+
+| 硬件/外设 | 功能描述 | 常见形式 |
+| :--- | :--- | :--- |
+| **USB 转串口外设** | 建立电脑的 USB 接口和设备的串口之间的**翻译通道**，实现协议转换。 | **CH340 模块** |
+| **USB 线缆** | 指 Type-C/USB-A 转 Micro USB/Type-C 等线。电控通过**虚拟串口技术**，将串口信息通过单片机上的 USB 口转换为电脑能理解的 USB 协议。 | |
+
+> **CH340**：是一种常用的串口转 USB 芯片/模块的型号。
 
 ![ch340](images/Serial_Communication-image.png)
 
-在和串口打交道中，有两个经常提及的参数——端口名称，波特率
+### 串口通信参数
 
-- `端口名称（port_name）`：是插在电脑上串口的路径，在使用 CH340 时常出现在 `/dev/ttyUSB0` ，使用虚拟串口时则会是 `/dev/ttyACM0`
-- `波特率（baud_rate）`：是两个设备见进行串口通信所协商的一个频率，波特率对上了才能收到通信消息
+要使设备间能正确“听懂”彼此的消息，必须正确设置以下两个参数：
 
-本教程主要学习如何对电控发来的信息进行解包和发包给电控，一个包有 8 比特（bit）/ 1 字节（byte）的容量大小，例如二进制$(1111 1111)_{2}=(255)_{10}$就有 8 位数（8 bit）
+| 参数名称 | 解释 | 常见取值示例 |
+| :--- | :--- | :--- |
+| **端口名称（`port_name`）** | 串口设备在 Linux 下的路径 | 使用 CH340：`/dev/ttyUSB0` <br> 使用虚拟串口：`/dev/ttyACM0` |
+| **波特率（`baud_rate`）** | 两个设备进行串口通信所**协商的数据传输频率**（速率）。双方波特率必须一致才能正确通信。 | `115200` |
 
-## 数据的存储
+## 3\. 数据的最小单位与存储
 
-### int8_t
+在串口通信中，数据是以**包（Packet）**为单位传输的，一个包通常是 **8 比特（bit）**，即 **1 字节（byte）**。
 
-由于电控一次只能发 8 bit，所以我们在通信中规定一个包的数据类型为`int8_t`（有符号整型），与之相对的数据类型是`uint8_t`（无符号整型），符号指数值的正负，在一个包 8 比特的容量中，有 1 比特用来存储正负号，例如$(10000001)_{2}=(-1)_{10}$，`int8_t`和`uint8_t`的区别在于有一位拿来当正负号用了，所以`int8_t`只有 7 比特可以存储数字，`int8_t`的数字范围要在$-127——127$之间，$(0111 1111)_{2}=(+127)_{10}$
+### 3.1. 8 位整型：`int8_t` 和 `uint8_t`
 
-> 二进制的正负用 0 表示正数，1 表示负数
+由于电控一次只能发送 8 bit，通信中的最小数据类型是 8 位整型：
 
-### int16_t
+| 类型 | 含义 | 字节/位数 | 数值范围 | 备注 |
+| :--- | :--- | :--- | :--- | :--- |
+| **`uint8_t`** | **无符号** 8 位整型 | 1 字节 / 8 bit | $0$ 到 $255$ | 8 位都用于存储数值。 |
+| **`int8_t`** | **有符号** 8 位整型 | 1 字节 / 8 bit | $-128$ 到 $127$ | 其中 $1$ 位（最高位）用于存储**符号位**（$0$ 为正，$1$ 为负）。 |
 
-前面我们知道，int8_t 最大值就 127 ，但是我们传的角度范围在 $\pm 180$之间，明显数据位不够传了，这时有两种选择，一种使用 float32 ，一种使用 int16_t ,使用 float32 需要 4 个包，使用 int16_t 需要 2 个包。这里我们选择使用 int16_t ，一方面 float32 使用的包多，一方面对传输的角度数据 x100 再发送，由于 int16_t 范围 $\pm 32,768$，发送的角度数据最大 $18,000$ ，是不会发生溢出的
+### 3.2. 使用 16 位整型 (`int16_t`) 传输更大的数据
 
-## 数据封装
+`int8_t` 最大只能表示 $127$。如果我们要传输的角度范围在 $\pm 180^{\circ}$，就需要更大的数据类型。
 
-### 数据读取
+| 数据类型 | 所需字节数（包数） | 适用场景 |
+| :--- | :--- | :--- |
+| **`int8_t`** | 1 字节 | 仅需传输小范围整数。 |
+| **`int16_t`** | **2 字节** | 传输如 $\pm 18000$ 等较大范围的整数（$\pm 32,767$）。**（推荐）** |
+| **`float32`** | 4 字节 | 传输浮点数，但占用带宽较大。 |
 
-串口的开启代码详见附录，代码并不需要第三方库依赖。这里直接教怎么用附录封装好的类开启串口解包数据
+**数据缩放技巧：** 既然选择了 `int16_t`，为了传输浮点数（如角度 $180.00$），我们通常将数据**放大**（例如 $\times 100$）成整数后再发送，接收端再**缩小**（$\div 100$）还原。
+
+  * 发送 $180.00$ 时，实际发送 $18000$，在 `int16_t` 的范围 ($\pm 32,767$) 内不会溢出。
+
+## 4\. 数据封装：解包与发包
+
+数据传输的核心是将大容量数据**拆分成 8 bit 的小包**（发包），然后在接收端将**小包重新组合**（解包）。
+
+### 4.1. 数据读取（接收）
+
+使用封装好的 `UartTransporter` 类（详见附录）开启串口并读取原始数据：
 
 ```c++
 #include "uart_transporter.hpp"
 
-// 开启串口
-string port_name = "/dev/ttyUSB0";  // 串口设备
-int baud_rate = 115200;             // 波特率
+// 1. 开启串口
+std::string port_name = "/dev/ttyUSB0";  // 串口设备路径
+int baud_rate = 115200;                  // 波特率
 auto uart_transporter = std::make_unique<UartTransporter>(port_name, baud_rate);
 
-// 读取串口数据
+// 2. 读取串口数据
+#define capacity 16 // 预期接收的字节数
+uint8_t tmp_buffer_[capacity];
+// 从串口读取 capacity 个字节（包）到 tmp_buffer_ 临时存储
+int recv_len = uart_transporter->read(tmp_buffer_, capacity);
+if (recv_len != capacity) {
+    // 检查是否收到了预期的字节数，如果不够则返回
+    return;
+}
+```
+
+### 4.2. 数据解包：合并 8 bit 数据为 16 bit
+
+电控将一个 `int16_t` 数据拆成**高八位**和**低八位**两个 `uint8_t` 包发送。我们需要使用**位运算符**将其合并。
+
+**合并原理：**
+
+1.  将**高八位**数据**左移 8 位**（`<< 8`），使其占据 $16$ 位数据的高 $8$ 位位置。
+2.  将左移后的结果与**低八位**数据进行**按位或（`|`）**运算，完成合并。
+
+<!-- end list -->
+
+```c++
+// 假设：tmp_buffer_[1] 是高八位，tmp_buffer_[2] 是低八位（需与电控约定顺序）
+
+// 使用位运算将两个 8-bit 数据合并成 16-bit
+int16_t yaw_raw = (tmp_buffer_[1] << 8) | tmp_buffer_[2];
+
+// 还原为浮点数（如果发送时乘以了 100，这里需要除以 100.0f）
+float yaw_receive = static_cast<float>(yaw_raw) / 100.0f; 
+```
+
+### 4.3. 数据发包：拆分 16 bit 数据为两个 8 bit
+
+发送过程是解包的逆过程，将 `int16_t` 拆分成高八位和低八位：
+
+```c++
+// 初始化数据包
 #define capacity 16
-uint8_t tmp_buffer_[capacity];
-// 从串口读取 capacity 个包进 tmp_buffer_ 临时存储
-int recv_len = uart_transporter->read(tmp_buffer_, capacity);
-if (recv_len != capacity) return
-```
+uint8_t tmp_buffer_[capacity] = {0}; // 初始化缓冲区
 
-这里的 uint8_t 也可以为 int8_t ，主要是为了从串口读取同等长度的二进制数进变量里
-
-### 数据解包
-
-我们知道，int16_t 需要 16 bit ，而电控发包一次只能 8 bit 地发，这时我们考虑将 16 bit 数据拆成两个 8 bit 数据两个包发送过来，然后我们收到两个包后将数据合并成一个
-
-这里举个例子，电控发送一个 int16_t 的数据，$(1000\ 1111\ 1100\ 1100)_{2} = (-4044)_{10}$ ，我们将数据拆成两个包发送，即两个 int8_t ，`1000 1111`（高八位） 和 `1100 1100`（低八位），根据权重我们称呼拆开的两个包为高八位低八位，在发送时，可以先发高八位再发低八位，也可以先发低八位再发高八位
-
-由于高八位、低八位的顺序不同，所以不同的解包方式会影响到数值的正确与否
-
-为了将两个 int8_t 合并成 int16_t ，需要使用到**位运算符**，将高八位左移 8 位，再按位或第八位即可合并成功，例如 `1000 1111 << 8 = 1000 1111 0000 0000`，`1000 1111 0000 0000 | 1100 1100 = 1000 1111 1100 1100`
-
-接下来我们完整地将电控发来的数据转换成 float32
-
-```c++
-int16_t yaw = (tmp_buffer_[1] << 8 ) | tmp_buffer_[2];
-float yaw_receive = static_cast<float>(yaw); // 如果电控发来的数据有 x100 ，这里还需要 /100
-```
-
-## 数据发包
-
-接下来我们讲如何将数据发送出去，我们常用的都是 int float double 数据类型，这些最少都需要 4 字节存储，但由于我们发送的数字范围能在 2 字节完成，所以这里不考虑数据溢出问题
-
-下面演示如何将数据转成 int16_t ，再拆成 int8_t 包装
-
-```c++
-//初始化数据包
-uint8_t tmp_buffer_[capacity]
-for(int i = 0; i < capacity; i++) tmp_buffer_[i] = 0x00;
-
-// 定义数据
+// 1. 定义和转换数据
 float num = 233.233;
-int16_t yaw = num*100;
-//打包数据
-tmp_buffer_[0] = yaw >> 8;     // 高八位
-tmp_buffer_[1] = yaw & 0xFF;   // 低八位
+// 转换为 int16_t（乘以 100）
+int16_t yaw = static_cast<int16_t>(num * 100);
 
-uart_transporter->send(tmp_buffer_, capacity);
+// 2. 打包数据：拆分成高八位和低八位
+tmp_buffer_[0] = (yaw >> 8);      // 高八位：右移 8 位，取出高 8 位
+tmp_buffer_[1] = (yaw & 0xFF);    // 低八位：与 0xFF (即 1111 1111) 按位与，取出低 8 位
+
+// 3. 发送数据
+uart_transporter->write(tmp_buffer_, capacity);
 ```
 
-## 数据检测
+## 5\. 提高可靠性：数据检测与冗余校验
 
-我们有时需要发送一连串的包，然后接收解析，那么这有个问题，我们怎么知道这串包的第一位在哪里，这时便使用到了针头检测，在发送的第一个包写入独特的数据信息，以帮助确认开始解析的位置，一般在知道数据包长度后有针头检测就够了，但我们也可以在加入一步针尾检测
+### 5.1. 帧头/帧尾检测（数据同步）
 
-以下是例子
+当发送一连串数据包时，接收端需要知道数据流的**起始位置**。通过在数据包的第一个（或最后一个）字节写入一个特定的、独一无二的值作为**帧头/帧尾**，来实现数据同步。
+
+  * **发送数据（加入帧头）：**
+    ```c++
+    tmp_buffer_[0] = 0xff;          // 帧头
+    tmp_buffer_[1] = yaw >> 8;      // 高八位
+    tmp_buffer_[2] = yaw & 0xFF;    // 低八位
+    // ... 发送
+    ```
+  * **接收数据（检测帧头）：**
+    ```c++
+    // ... 读取数据到 tmp_buffer_
+    if (tmp_buffer_[0] != 0xff) {
+        // 帧头不匹配，说明接收位置不正确，跳过当前数据
+        continue;
+    }
+    // 帧头匹配，开始解析数据
+    int16_t yaw = (tmp_buffer_[1] << 8) | tmp_buffer_[2];
+    ```
+
+### 5.2. 冗余校验（错误检测）
+
+为了检测数据在传输过程中是否被干扰（例如 $0$ 变成 $1$），我们需要在数据包中加入**校验位**。
+
+  * 异或校验 (XOR)：将数据部分的所有字节进行**异或**运算，将结果作为校验位发送。它能检测出奇数位的错误。
+
+    ```c++
+    // 假设 data[8] 是校验位
+    data[8] = data[1] ^ data[2] ^ data[3] ^ data[4] ^ data[5] ^ data[6] ^ data[7];
+    ```
+
+  * **其他校验方式：**
+
+      * 奇偶校验 (Parity)：通过控制数据中 $1$ 的总数为奇数或偶数，用于检测 $1$ 位错误。
+      * CRC 校验 (循环冗余校验)：检错能力最强，应用最广泛。
+
+-----
+
+## 附录：`UartTransporter` 类（C++ 代码）
+
+此部分包含用于串口操作的 C++ 类定义和实现，用于简化上层应用的串口打开、配置、读写操作。
+
+### `uart_transporter.hpp`
 
 ```c++
-// 发送
-tmp_buffer_[0] = 0xff;         // 帧头
-tmp_buffer_[1] = yaw >> 8;     // 高八位
-tmp_buffer_[2] = yaw & 0xFF;   // 低八位
-int recv_len = uart_transporter->write(tmp_buffer_, capacity);
-
-// 接收
-uint8_t tmp_buffer_[capacity];
-int recv_len = uart_transporter->read(tmp_buffer_, capacity);
-if (tmp_buffer_[0] != 0xff) continue;
-int16_t yaw = (tmp_buffer_[1] << 8 ) | tmp_buffer_[2];
-float yaw_receive = static_cast<float>(yaw);
-
-```
-
-## 冗余校验
-
-有了针头针尾检测后，我们可能还觉得不够，万一数据在传输过程中收到干扰，0 变成 1 这样怎么办，也就有了下面的对数据包进行检验的步骤
-
-我们在发送的一串数据包中，第一个包做针头，倒数第一个包做针尾，倒数第二个包做数据校验
-
-以下是一个简单的检验方式，异或校验
-
-```c++
-data[8] = data[1] ^ data[2] ^ data[3] ^ data[4] ^ data[5] ^ data[6] ^ data[7];
-```
-
-除此之外的校验方式还有，奇偶校验，CRC 校验
-
-## 附录
-
-uart_transporter.hpp
-
-```c++
-// Copyright (C) 2021 RoboMaster-OSS
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
-// Additional modifications and features by Chengfu Zou, 2023.
-//
-// Copyright (C) FYT Vision Group. All rights reserved.
-
 #ifndef SERIAL_DRIVER_UART_TRANSPORTER_HPP_
 #define SERIAL_DRIVER_UART_TRANSPORTER_HPP_
 
@@ -214,27 +245,9 @@ private:
 
 ```
 
-uart_transporter.cpp
+### `uart_transporter.cpp`
 
 ```c++
-// Copyright (C) 2021 RoboMaster-OSS
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-//
-// Additional modifications and features by Chengfu Zou, 2023.
-//
-// Copyright (C) FYT Vision Group. All rights reserved.
-
 #include "uart_transporter.hpp"
 // System
 #include <errno.h> /*错误号定义*/
@@ -412,6 +425,5 @@ int UartTransporter::write(const void* buffer, size_t len) {
     int ret = ::write(fd_, buffer, len);
     return ret;
 }
-
 
 ```
