@@ -70,7 +70,7 @@
 
 使用封装好的 `UartTransporter` 类（详见附录）开启串口并读取原始数据：
 
-```c++
+```cpp
 #include "uart_transporter.hpp"
 
 // 1. 开启串口
@@ -100,7 +100,7 @@ if (recv_len != capacity) {
 
 <!-- end list -->
 
-```c++
+```cpp
 // 假设：tmp_buffer_[1] 是高八位，tmp_buffer_[2] 是低八位（需与电控约定顺序）
 
 // 使用位运算将两个 8-bit 数据合并成 16-bit
@@ -114,7 +114,7 @@ float yaw_receive = static_cast<float>(yaw_raw) / 100.0f;
 
 发送过程是解包的逆过程，将 `int16_t` 拆分成高八位和低八位：
 
-```c++
+```cpp
 // 初始化数据包
 #define capacity 16
 uint8_t tmp_buffer_[capacity] = {0}; // 初始化缓冲区
@@ -139,14 +139,14 @@ uart_transporter->write(tmp_buffer_, capacity);
 当发送一连串数据包时，接收端需要知道数据流的**起始位置**。通过在数据包的第一个（或最后一个）字节写入一个特定的、独一无二的值作为**帧头/帧尾**，来实现数据同步。
 
   * **发送数据（加入帧头）：**
-    ```c++
+    ```cpp
     tmp_buffer_[0] = 0xff;          // 帧头
     tmp_buffer_[1] = yaw >> 8;      // 高八位
     tmp_buffer_[2] = yaw & 0xFF;    // 低八位
     // ... 发送
     ```
   * **接收数据（检测帧头）：**
-    ```c++
+    ```cpp
     // ... 读取数据到 tmp_buffer_
     if (tmp_buffer_[0] != 0xff) {
         // 帧头不匹配，说明接收位置不正确，跳过当前数据
@@ -162,7 +162,7 @@ uart_transporter->write(tmp_buffer_, capacity);
 
   * 异或校验 (XOR)：将数据部分的所有字节进行**异或**运算，将结果作为校验位发送。它能检测出奇数位的错误。
 
-    ```c++
+    ```cpp
     // 假设 data[8] 是校验位
     data[8] = data[1] ^ data[2] ^ data[3] ^ data[4] ^ data[5] ^ data[6] ^ data[7];
     ```
@@ -180,7 +180,7 @@ uart_transporter->write(tmp_buffer_, capacity);
 
 ### `uart_transporter.hpp`
 
-```c++
+```cpp
 #ifndef SERIAL_DRIVER_UART_TRANSPORTER_HPP_
 #define SERIAL_DRIVER_UART_TRANSPORTER_HPP_
 
@@ -247,7 +247,7 @@ private:
 
 ### `uart_transporter.cpp`
 
-```c++
+```cpp
 #include "uart_transporter.hpp"
 // System
 #include <errno.h> /*错误号定义*/
