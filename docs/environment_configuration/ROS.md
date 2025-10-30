@@ -82,6 +82,30 @@ sudo apt install ros-humble-desktop
 sudo apt install python3-colcon-common-extensions
 ```
 
+#### rosdep
+
+rosdep 能自动读取 xml 文件里的 ros 包依赖并自动安装
+
+```bash
+sudo apt install python3-rosdep 
+```
+
+修改 rosdep 源为中科大源
+
+```bash
+# 使用以下步骤替代 rosdep init
+sudo mkdir -p /etc/ros/rosdep/sources.list.d/
+sudo curl -o /etc/ros/rosdep/sources.list.d/20-default.list https://mirrors.ustc.edu.cn/rosdistro/rosdep/sources.list.d/20-default.list
+sed -i 's#raw.githubusercontent.com/ros/rosdistro/master#mirrors.ustc.edu.cn/rosdistro#g' /etc/ros/rosdep/sources.list.d/20-default.list
+
+# 更换源
+export ROSDISTRO_INDEX_URL=https://mirrors.ustc.edu.cn/rosdistro/index-v4.yaml
+rosdep update
+
+# 可以考虑持久化以上环境变量：
+echo 'export ROSDISTRO_INDEX_URL=https://mirrors.ustc.edu.cn/rosdistro/index-v4.yaml' >> ~/.bashrc
+```
+
 #### 添加环境变量
 
 注意这里的 humble 需要替换成你的 ROS 版本
@@ -94,8 +118,9 @@ echo "source /opt/ros/humble/setup.bash" >> ~/.bashrc
 
 ---
 
-> [中科大源](https://mirrors.ustc.edu.cn/help/rosdistro.html)
+> [中科大源](https://mirrors.ustc.edu.cn/help/ros2.html)
 >
 > [ROS Humble 官方安装教程](https://docs.ros.org/en/humble/Installation/Ubuntu-Install-Debs.html)
+
 
 ## 源码编译安装
