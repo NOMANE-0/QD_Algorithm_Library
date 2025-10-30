@@ -16,3 +16,4 @@
   - [QEMU 模拟器](qemu.md)
   - [NVIDIA](NVIDIA.md)
   - [Foxglove](Foxglove.md)
+  - [共享网络](Shared_network.md)
