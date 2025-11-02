@@ -2,11 +2,11 @@
 
 负责共享网络的设备称之为服务端，想要联网的设备称为客户端，服务端需要有有线网卡和无线网卡
 
-## Linux
+## 服务端
 
 - 环境：Ubuntu 22.04
 
-### 服务端
+### Linux
 
 打开“网络连接”设置网络共享
 
@@ -22,8 +22,42 @@ nm-connection-editor
 
 ![ipv4](images/Shared_network-image-1.png)
 
-### 客户端
+### Windows
 
-和服务端操作一样打开网络设置，并设置静态 ip
+快捷键`Win + r`打开 “运行” ，输入`cmd`打开终端
+
+![cmd](images/Shared_network-image-3.png)
+
+输入以下命令打开“网络连接”
+
+```shell
+ncpa.cpl
+```
+
+这里的“以太网”是你的网口，名称可能不一样，但会有`Realtek PCIe GbE`这种字样
+
+WNAL 是你的 WIFI 网卡，会有你网卡的名称，像我的网卡是 AX210 ，这里就有显示
+
+![network](images/Shared_network-image-4.png)
+
+![alt text](images/Shared_network-image-5.png)
+
+验证
+
+![alt text](images/Shared_network-image-6.png)
+
+## 客户端
+
+打开“网络连接”设置网络共享
+
+```bash
+nm-connection-editor
+```
+
+打开设置
+
+![设置](images/Shared_network-image.png)
+
+设置静态 ip
 
 ![ip](images/Shared_network-image-2.png)
