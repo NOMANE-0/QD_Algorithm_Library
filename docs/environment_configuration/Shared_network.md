@@ -34,6 +34,8 @@ nm-connection-editor
 ncpa.cpl
 ```
 
+![alt text](images/Shared_network-image-7.png)
+
 这里的“以太网”是你的网口，名称可能不一样，但会有`Realtek PCIe GbE`这种字样
 
 WNAL 是你的 WIFI 网卡，会有你网卡的名称，像我的网卡是 AX210 ，这里就有显示
