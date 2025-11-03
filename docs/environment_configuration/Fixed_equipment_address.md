@@ -1,6 +1,6 @@
 # 固定设备地址
 
-在使用串口或者 USB 相机时，我们会发现有时它的文件位置不是固定的，可能从`/dev/video0`变成`/dev/video2`，为此我们根据设备的独有信息使用 udev 规则将设备绑定要一个固定的位置
+在使用串口时，我们会发现有时它的文件位置不是固定的，可能从`/dev/ttyUSB0`变成`/dev/ttyUSB1`，为此我们根据设备的独有信息使用 udev 规则将设备绑定要一个固定的位置
 
 ## 设备信息查看
 
@@ -19,7 +19,7 @@ Bus 002 Device 002: ID 2bdf:0001 Hikrobot MV-CS016-10UC
 
 这里可以看到设备`CH340`的识别号为`1a86:7523`
 
-- 使用`udevadm info --attribute-walk /sys/class/tty/ttyUSB1 | grep KERNELS`查看设备更多信息
+- 使用`udevadm info --attribute-walk /sys/class/tty/ttyUSB1 | grep KERNELS`查看设备更多信息，这里的`ttyUSB1`替换成你设备的位置
 
 ```bash
 qd2025@qd2025:~/$ udevadm info --attribute-walk /sys/class/tty/ttyUSB0 | grep KERNELS
@@ -58,7 +58,7 @@ KERNEL=="ttyUSB*", KERNELS=="1-2", ATTRS{idVendor}=="1a86", ATTRS{idProduct}=="7
 
 ---
 
-同理，如果只有一个设备，但是名字会变的话，我们可以这么写
+同理，如果只有一个设备，但是名字会变的话，那么我们可以这么写
 
 ```bash
 KERNEL=="ttyUSB*", MODE:="0777", SYMLINK+="rm_usb0"
