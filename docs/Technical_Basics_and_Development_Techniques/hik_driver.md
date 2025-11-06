@@ -91,7 +91,7 @@ int nRet = MV_CC_StopGrabbing(handle);
 因为默认海康相机的图片格式是 
 获得了图像缓存（stImageInfo）就可以作格式转换了，SDK 有提供现成的函数来转换,
 
-‵``c++
+```c++
 // 像素格式转换
 unsigned char *pDataForRGB = (unsigned char*)malloc(stImageInfo.stFrameInfo.nExtendWidth * stImageInfo.stFrameInfo.nExtendHeight * 4 + 2048);
 MV_CC_PIXEL_CONVERT_PARAM stConvertParam = {0};

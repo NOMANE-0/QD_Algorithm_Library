@@ -8,6 +8,8 @@
 
 ### Linux
 
+#### 设置静态地址
+
 打开“网络连接”设置网络共享
 
 ```bash
@@ -21,6 +23,35 @@ nm-connection-editor
 在`IPv4`设置中设置`方法`为`与其他计算机共享`，`添加` ip 地址和子网掩码
 
 ![ipv4](images/Shared_network-image-1.png)
+
+#### 启动包转发
+
+检查当前的包转发设置
+
+```bash 
+sysctl -a | grep forward
+
+# 需要有以下输出，没有的话在 /etc/sysctl.conf 中写入以下内容
+# net.ipv4.ip_forward = 1
+# net.ipv4.conf.all.forwarding = 1
+# net.ipv6.conf.all.forwarding = 1
+```
+
+#### 启用 NAT
+
+启用 NAT 来将无线网卡的网络供给有线网卡
+
+这里默认 net0 为有线网卡，internet0 为无线网卡，使用`ip a`查看网卡名称
+
+```bash
+iptables -t nat -A POSTROUTING -o internet0 -j MASQUERADE
+iptables -A FORWARD -m conntrack --ctstate RELATED,ESTABLISHED -j ACCEPT
+iptables -A FORWARD -i net0 -o internet0 -j ACCEPT
+```
+
+> 该命令重启后会失效，如想一直使用建议写入自启动脚本
+
+> 参考资料：[网络分享](https://wiki.archlinuxcn.org/wiki/%E7%BD%91%E7%BB%9C%E5%88%86%E4%BA%AB#)
 
 ### Windows
 
