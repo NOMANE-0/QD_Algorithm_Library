@@ -96,7 +96,7 @@ sudo apt remove brltty
 | 场景 | 容器名称 | 启动命令 |
 | :--- | :--- | :--- |
 | **Foxglove 调试** | `rv_devel_` | `docker run -it --name rv_devel_ --privileged --network host -v /dev:/dev -v $HOME/.ros:/root/.ros -v ~/rmvision2025:/ros_ws slirute/qidian:latest ros2 launch foxglove_bridge foxglove_bridge_launch.xml` |
-| **自启动/运行时** | `rv_runtime_` | `docker run -it --name rv_runtime_ --privileged --network host -v /dev:/dev -v $HOME/.ros:/root/.ros -v ~/rmvision2025:/ros_ws slirute/qidian:latest bash -c "source /ros_ws/src/rm_upstart/rm_watch_dog.sh"` |
+| **自启动/运行时** | `rv_runtime_` | `docker run -it --name rv_runtime_ --privileged --network host --restart always -v /dev:/dev -v $HOME/.ros:/root/.ros -v ~/rmvision2025:/ros_ws slirute/qidian:latest bash -c "source /ros_ws/src/rm_upstart/rm_watch_dog.sh"` |
 
 -----
 
