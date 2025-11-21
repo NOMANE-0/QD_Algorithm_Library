@@ -81,6 +81,8 @@ WNAL 是你的 WIFI 网卡，会有你网卡的名称，像我的网卡是 AX210
 
 ## 客户端
 
+在服务端配置好后其实服务端就有 DHCP 能力了，但由于客户端的IP地址可能会改变，所以这里直接设置成静态地址
+
 打开“网络连接”设置网络共享
 
 ```bash
@@ -94,3 +96,11 @@ nm-connection-editor
 设置静态 ip
 
 ![ip](images/Shared_network-image-2.png)
+
+## 扫描 HDCP 下发的 IP 地址
+
+```bash
+sudo apt-get install nmap
+nmap 192.168.137.1/24
+```
+
