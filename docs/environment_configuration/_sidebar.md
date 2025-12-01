@@ -18,3 +18,4 @@
   - [Foxglove](Foxglove.md)
   - [共享网络](Shared_network.md)
   - [字体补全](Windows_Fonts.md)
+  - [离线下载VScode服务器](VS_server.md)
