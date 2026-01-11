@@ -17,11 +17,11 @@ sudo apt install ros-${ROS_DISTRO}-launch-testing-ament-cmake
 ### 海康工业相机
 
 ```bash
-git clone https://github.com/chenjunnn/ros2_hik_camera.git
-cd ros2_hik_camera
+git clone https://github.com/SMBU-PolarBear-Robotics-Team/hik_camera_ros2_driver.git
+cd hik_camera_ros2_driver
 colcon build --symlink-install
 . install/setup.bash
-ros2 launch hik_camera hik_camera.launch.py
+ros2 launch hik_camera_ros2_driver hik_camera_launch.py
 ```
 
 ### USB 相机
@@ -46,7 +46,7 @@ ros2 topic hz /image_raw
 ## 启动相机标定节点
 
 ```bash
-ros2 run camera_calibration cameracalibrator --size 8x8 --square 0.035 image:=/image_raw camera:=/image_raw --no-service-check
+ros2 run camera_calibration cameracalibrator --size 8x8 --square 0.035 image:=/camera/image camera:=/camera --no-service-check
 ```
 
 `--size`：棋盘格尺寸，注意不是指格子数量，是黑白格相交的角点数量

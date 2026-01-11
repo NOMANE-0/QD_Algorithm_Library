@@ -81,6 +81,14 @@ sudo apt install ros-humble-desktop
 ```bash
 sudo apt install python3-colcon-common-extensions
 ```
+#### python3-argcomplete
+
+cli 命令提示，方便进行 tab 补全
+
+```bash
+sudo apt install python3-argcomplete
+echo "source /usr/share/colcon_argcomplete/hook/colcon-argcomplete.bash" >> ~/.bashrc
+```
 
 #### rosdep
 
@@ -96,7 +104,7 @@ sudo apt install python3-rosdep
 # 使用以下步骤替代 rosdep init
 sudo mkdir -p /etc/ros/rosdep/sources.list.d/
 sudo curl -o /etc/ros/rosdep/sources.list.d/20-default.list https://mirrors.ustc.edu.cn/rosdistro/rosdep/sources.list.d/20-default.list
-sed -i 's#raw.githubusercontent.com/ros/rosdistro/master#mirrors.ustc.edu.cn/rosdistro#g' /etc/ros/rosdep/sources.list.d/20-default.list
+sudo sed -i 's#raw.githubusercontent.com/ros/rosdistro/master#mirrors.ustc.edu.cn/rosdistro#g' /etc/ros/rosdep/sources.list.d/20-default.list
 
 # 更换源
 export ROSDISTRO_INDEX_URL=https://mirrors.ustc.edu.cn/rosdistro/index-v4.yaml
