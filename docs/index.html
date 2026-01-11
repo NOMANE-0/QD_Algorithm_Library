@@ -49,9 +49,16 @@
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/emoji.min.js"></script>    
   <!-- 离线支持 -->
   <script>
- 	 if (typeof navigator.serviceWorker !== 'undefined') {
-    		navigator.serviceWorker.register('sw.js')
-  	}
+    // Only register service worker in supported contexts (not in webviews or other restricted environments)
+    if (typeof navigator.serviceWorker !== 'undefined' && window.isSecureContext) {
+      try {
+        navigator.serviceWorker.register('sw.js').catch(function(error) {
+          console.log('Service Worker registration skipped:', error.message);
+        });
+      } catch (error) {
+        console.log('Service Worker not supported in this context');
+      }
+    }
   </script>
   <!-- 全文搜索 -->
   <script src="//cdn.jsdelivr.net/npm/docsify/lib/plugins/search.min.js"></script>
