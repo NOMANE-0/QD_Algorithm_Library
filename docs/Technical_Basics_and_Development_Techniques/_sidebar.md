@@ -2,7 +2,6 @@
 - 技术入门与开发技巧
   
   - ROS
-    - [ROS命令补全](ROS_command_completion.md)
     - [ROS依赖补全](rosdep.md)
   - C++新特性
     - [C++11 语法新特性](C++11_grammar.md)

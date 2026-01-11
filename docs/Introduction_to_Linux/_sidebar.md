@@ -13,3 +13,4 @@
   - [关闭 CPU 核心](disable_cpu_core.md)
   - [xrandr 窗口系统配置管理工具](xrandr.md)
   - [自动挂载硬盘](auto_mount_disk.md)
+  - [nmcli WIFI管理工具](nmcli.md)
