@@ -1,14 +1,17 @@
 # 第三阶段学习路线
 
-都先学 ROS2，然后分流
-
-视觉学神经网络，导航学鱼香ROS
+重点学习 ROS2，然后分流进视觉组和导航组
 
 ## ROS2(机器⼈操作系统)
 
-学习资料：[ROS2理论与实践](https://www.bilibili.com/video/BV1VB4y137ys)
+学习资料：[ROS2理论与实践](https://www.bilibili.com/video/BV1VB4y137ys)及其[课件](https://gitee.com/slime0rimiru0/ROS2_Tuition)
 
-学习要求：学习课程里的c++内容，了解ros的通信形式，能够自己编写节点，能看懂urdf、launch启动文件和使用基本的ros命令和可视化工具
+学习要求：
+- 学习课程里的c++内容
+- 了解ros的通信形式，能够自己编写节点
+- 能看懂urdf、launch启动文件并仿写就行
+- 会使用基本的 ros CLI进行调试
+- rviz2 的使用
 
 ## c++11新特性
 
@@ -25,14 +28,23 @@
 
 学习要求：理解线性代数的本质，理解线性代数在空间变换、坐标变换上的应用
 
+---
+
 ## 视觉组
 
-**神经网络（深度学习）**
+两个学习方向代表了两个方向，图像识别获得信息和处理这些信息
+
+**卡尔曼滤波器（滤波算法）**
+
+学习资料：[从放弃到精通！卡尔曼滤波从理论到实践~](https://www.bilibili.com/video/BV1Rh41117MT)
+
+卡尔曼滤波器（EK）是基于当前预测未来状态的算法，学完后可以去了解下扩展卡尔曼滤波器（EKF）
+
+**神经网络（深度学习）- Pytorch（深度学习框架）**
 
 基本编成语言：python
 
 学习资料：[黑马程序员python教程](https://www.bilibili.com/video/BV1qW4y1a7fU)
-Pytorch（深度学习框架）
 
 学习资料：[《PyTorch深度学习实践》完结合集](https://www.bilibili.com/video/BV1Y7411d7Ys)、[1.1Faster RCNN理论合集](https://www.bilibili.com/video/BV1af4y1m7iL)
 
