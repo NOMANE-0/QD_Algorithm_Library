@@ -100,7 +100,51 @@ nm-connection-editor
 ## 扫描 HDCP 下发的 IP 地址
 
 ```bash
+# Linux
 sudo apt-get install nmap
 nmap 192.168.137.1/24
+```
+
+## 其他方法
+
+这里 RJ45 有线网卡为`net0`，无线网卡为`internet0`，可以使用以下 udev 规则修改网卡名称
+
+```bash
+# 将有线网卡重命名为 net0
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="e8:9c:25:4d:42:e5", NAME="net0"
+
+# 将无线网卡重命名为 internet0
+SUBSYSTEM=="net", ACTION=="add", DRIVERS=="?*", ATTR{address}=="98:59:7a:d8:96:86", NAME="internet0"
+```
+
+```bash
+# 显式地创建一个连接，将它绑定到现在的内网口 net0，并配置为共享模式
+nmcli connection add type ethernet ifname net0 con-name "My_Share" ipv4.method shared ipv4.addresses 192.168.137.1/24
+# 激活新连接
+nmcli connection up "My_Share"
+# 确保 IP 转发已开启
+sudo sysctl -w net.ipv4.ip_forward=1
+```
+ 
+## 常见问题
+
+1. 设置后客户端无法上网
+
+在 Linux 中，**Docker** 守护进程启动时，默认会将 iptables 里的 FORWARD 链（转发链）策略强制修改为 DROP。NetworkManager 的 shared 模式会自动配置 NAT 规则，但由于 FORWARD 默认被 Docker 改为了拒绝，导致 Host 接收到来自 Pi 的外网数据包后，直接在内核层被防火墙丢弃
+
+```bash
+# 查看当前 FORWARD 策略
+sudo iptables -L FORWARD -n | head -n 3
+# 如果输出的第一行包含 Chain FORWARD (policy DROP)
+# 则证实服务端端 Docker 拦截了 FORWARD 转发流量
+# 放行所有转发
+sudo iptables -P FORWARD ACCEPT
+```
+
+2. 无法让客户端通过服务端的虚拟网卡（TUN模式）
+
+```bash
+# 无条件放行来自 net0 的所有转发流量
+sudo iptables -I FORWARD -i net0 -j ACCEPT
 ```
 
