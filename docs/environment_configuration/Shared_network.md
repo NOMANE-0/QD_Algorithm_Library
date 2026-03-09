@@ -130,7 +130,7 @@ sudo sysctl -w net.ipv4.ip_forward=1
 
 1. 设置后客户端无法上网
 
-在 Linux 中，**Docker** 守护进程启动时，默认会将 iptables 里的 FORWARD 链（转发链）策略强制修改为 DROP。NetworkManager 的 shared 模式会自动配置 NAT 规则，但由于 FORWARD 默认被 Docker 改为了拒绝，导致 Host 接收到来自 Pi 的外网数据包后，直接在内核层被防火墙丢弃
+在 Linux 服务端中，**Docker** 守护进程启动时，默认会将 iptables 里的 FORWARD 链（转发链）策略强制修改为 DROP。NetworkManager 的 shared 模式会自动配置 NAT 规则，但由于 FORWARD 默认被 Docker 改为了拒绝，导致 Host 接收到来自 Pi 的外网数据包后，直接在内核层被防火墙丢弃
 
 ```bash
 # 查看当前 FORWARD 策略
@@ -144,7 +144,7 @@ sudo iptables -P FORWARD ACCEPT
 2. 无法让客户端通过服务端的虚拟网卡（TUN模式）
 
 ```bash
-# 无条件放行来自 net0 的所有转发流量
+# 服务端无条件放行来自 net0 的所有转发流量
 sudo iptables -I FORWARD -i net0 -j ACCEPT
 ```
 
