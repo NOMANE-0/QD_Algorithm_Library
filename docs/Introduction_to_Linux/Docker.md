@@ -22,6 +22,7 @@ wget http://fishros.com/install -O fishros && . fishros
 
 ```bash
 sudo usermod -aG docker $USER
+newgrp docker
 ```
 
 - 法二：Docker Engine 安装（官方）
@@ -58,6 +59,8 @@ sudo apt-get update
 sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 # 添加用户到 docker 组
 sudo usermod -aG docker $USER
+# 激活对组的更改
+newgrp docker
 ```
 
 > 更多安装信息请看[docker install](https://docs.docker.com/engine/install/)
