@@ -7,6 +7,7 @@
   - [Docker](Docker.md)
   - [记住内核启动顺序](Kernel_order.md)
   - [swap分区扩容](swap_expansion.md)
+  - [根目录分区扩容](root_expansion.md)
   - [Linux零碎教程](Linux_Fragmented_tutorials.md)
   - [Linux报错记录](Linux_Bug_log.md)
   - [开机自启动](autoStart.md)
