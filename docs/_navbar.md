@@ -3,6 +3,7 @@
 - [学习路线](/LearningPath/)
 - [技术入门与开发技巧](/Technical_Basics_and_Development_Techniques/)
 - [Linux入门](/Introduction_to_Linux/)
+- [Linux问题合集](/Linux_issuses/)
 - [环境配置](/environment_configuration/)
 - [项目教程](/Project_Tutorial/)
 - [其他](/Others/)
