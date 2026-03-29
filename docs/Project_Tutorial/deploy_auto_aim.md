@@ -10,10 +10,10 @@
 
 在开始视觉调试前，请确保电控系统满足以下性能指标，以保证后续调优的有效性：
 
-  * **串口通信频率：** 必须达到 **1 kHz**，确保每 1 毫秒都有一个对应值。
-  * **子弹散布：** 在 **5 米**范围内应尽可能小，最好集中在一个弹丸大小内。
-  * **云台响应：** **Yaw/Pitch 响应速度要快**。建议电控 **PID 增加前馈**以快速跟上视觉发出的目标角度。
-  * **发弹延迟（开火延迟）：** 必须保持**稳定**。
+  * **串口通信频率：** 至少 **200 Hz**
+  * **子弹散布：** 在击打范围内保证散布在 1/4 块装甲板内
+  * **云台响应：** **Yaw/Pitch 响应速度要快**。建议电控 **PID 增加前馈**以快速跟上视觉发出的目标角度
+  * **发弹延迟（开火延迟）：** 延迟需要**稳定**，特别是英雄，可以通过测量拨盘转动到摩擦轮掉速粗略测得
 
 -----
 
@@ -54,7 +54,7 @@ sudo apt remove brltty
 
 ### 3\. 固定串口设备地址
 
-为避免设备拔插后串口路径（如 `/dev/ttyUSB0` 变为 `/dev/ttyUSB1`）变化，需要固定其路径：
+为避免设备拔插后串口路径（如 `/dev/ttyUSB0` 变为 `/dev/ttyUSB1`）变化，需要固定其路径为`rm_usb0`：
 
   * 固定串口路径教程详见：[固定设备地址](/environment_configuration/Fixed_equipment_address.md)
 
@@ -87,22 +87,18 @@ sudo apt remove brltty
 
 #### 5.3. 构建容器
 
-**关键挂载：**
+```bash
+cd rmvision2025
+docker compose up -d 
+```
 
-  * `-v /dev:/dev`：访问串口和摄像头。
-  * `-v $HOME/.ros:/root/.ros`：用于保存 ROS 日志。
-  * `-v ~/rmvision2025:/ros_ws`：**必须**，将代码挂载到容器内，容器会自动 `source /ros_ws/install/setup.bash`。
 
-| 场景 | 容器名称 | 启动命令 |
-| :--- | :--- | :--- |
-| **Foxglove 调试** | `rv_devel_` | `docker run -it --name rv_devel_ --privileged --network host -v /dev:/dev -v $HOME/.ros:/root/.ros -v ~/rmvision2025:/ros_ws slirute/qidian:latest ros2 launch foxglove_bridge foxglove_bridge_launch.xml` |
-| **自启动/运行时** | `rv_runtime_` | `docker run -it --name rv_runtime_ --privileged --network host --restart always -v /dev:/dev -v $HOME/.ros:/root/.ros -v ~/rmvision2025:/ros_ws slirute/qidian:latest bash -c "source /ros_ws/src/rm_upstart/rm_watch_dog.sh"` |
 
 -----
 
 ## ⚙️ 编译与运行
 
-**注意：** 任何配置修改**只**需修改 `src/rm_bringup/config` 下的各个 `yaml` 文件。
+**注意：** 任何配置修改**只**需修改 `src/rm_bringup/config` 下的各个 `yaml` 文件
 
 ### 1\. 编译与运行流程
 
@@ -113,66 +109,77 @@ docker exec -it rv_devel_ bash
 # 2. 进入工作空间
 cd /ros_ws
 
-# 3. 编译（仅需在代码有C++/Python源码逻辑修改时执行）
+# 3. 编译
 colcon build --symlink-install --parallel-workers 4
 
-# 4. 运行自瞄系统
-ros2 launch rm_bringup bringup.launch.py
+# 4. 开启自瞄
+ros2 launch rm_bringup bringup_SingleProcess.launch.py 
 ```
 
-  * `--symlink-install`：使用软链接安装，修改 `src` 下的 **Python/YAML** 文件后**无需重新编译**即可生效。
-  * `--parallel-workers 4`：限制编译线程数（建议 4 核 NUC 设置为 4），避免内存不足。
+  * `--symlink-install`：使用软链接安装，修改 `src` 下的 **Python/YAML** 文件后**无需重新编译**即可生效
+  * `--parallel-workers 4`：限制编译线程数（32G 忽略， 8G 改成 2 ），避免内存不足
+
+> miniPC 需要连接相机和下位机，不然自瞄开启失败
 
 -----
 
 ## 🚀 调车步骤
 
-调车过程中，请在**自己电脑**上开启 Foxglove 并连接 NUC，按顺序进行以下调试。
+调车过程中，使用网线连接 miniPC ，在**自己电脑**上开启 Foxglove 连接 miniPC，按顺序进行调车
 
 ### 1\. 标定相机内参
 
-  * **操作：** 标定相机内参。
-  * **修改文件：** 将内参结果写入 `camera_info.yaml`。
+  * **操作：** 标定相机内参
+  * **修改文件：** 将内参结果写入 `camera_info.yaml`
 
 ### 2\. 验证识别数据准确性
 
-  * **准备：** 开启自瞄（无串口时，设置 `launch_params.yaml` 中 `virtual_serial` 为 `true`）。
+  * **准备：** 开启自瞄
   * **Foxglove 检查点：**
       * `图像`面板：话题 `/armor_detector/result_img/compressed`。
       * `原始消息`面板：话题 `/armor_detector/armors`。
       * `参数`面板：修改曝光 `/camera_driver.exposure_time` 和增益 `/camera_driver.gain`。
   * **步骤：**
-    1.  增益拉到最高，然后调节曝光。
-    2.  改变装甲板的距离和角度，观察识别到的装甲板位置（norm）。
-    3.  要求：测距误差建议在 **3 cm 以内**。
-    4.  验证准确后，将当前的曝光、增益值写入 `node_params/camera_driver_params.yaml`。
-  * **测距不准的常见原因：** 内参标错、曝光/增益不匹配、装甲板角点位置不对（尝试调节 `node_params/armor_detector_params.yaml`）。
+    1.  增益拉到最高，然后调节曝光
+    2.  改变装甲板的距离和角度，观察识别到的装甲板位置（**norm**）
+    3.  要求：测距误差建议在 **1% 以内**，至多 2% 误差
+    4.  验证准确后，将当前的曝光、增益值写入 `node_params/camera_driver_params.yaml`
+  * **测距不准的常见原因：** 内参标错、曝光/增益不匹配、装甲板角点位置不对（尝试调节 `node_params/armor_detector_params.yaml`）
 
 ![陈君语录1](images/deploy_auto_aim-image.png)
+
+!> 这里有个非常容易忽略的点，即以哪里为零点测量距离。理论上以相机光心为原点，由于难以测量出来，可以以镜头光圈处为零点
 
 ### 3\. 验证坐标变换（电控数据）
 
   * **目的：** 验证电控发来的 Yaw/Pitch 角度数据是否正确。
-  * **操作：** 改变云台的 Yaw/Pitch 值。
+  * **操作：** 旋转云台，改变云台的 Yaw/Pitch 值。
   * **Foxglove 检查点：** `三维`面板，查看坐标轴的变换是否正确。
   * **要求：** 电控发来的数据应满足：Yaw 向左为正，Pitch 向下为正，Roll 左倾为正。
+
+!> `serial/receive`话题里的`pitch`是向上为正的，不要搞错了
 
 ### 4\. 标定相机外参
 
   * **目的：** 建立相机光心与云台（gimbal）之间的空间联系。
-  * **修改文件：** `launch_params.yaml` 中的 `dom2camera` 的 `xyz` 和 `rpy`。
-      * **`xyz` (米)：** 相机光心相对于云台的位置（基于 ROS 坐标系），可由图纸或实际测量得到。
-      * **`rpy` (弧度)：** 相机与云台坐标系轴线的角度差，一般重点调节 **Pitch**。
-  * **核心验证方法 (调节 Pitch)：**
-      * 在装甲板**高度不变**的情况下，移动装甲板或车体。
-      * Foxglove 检查话题 `/armor_solver/measurement.z`（装甲板在世界坐标系下的 Z 高度）。
-      * **理想情况：** 该值应**保持不变**。
+  * **修改文件：** `launch_params.yaml` 中的 `gimbal2camera` 的 `xyz` 和 `rpy`。
+      * **`xyz` (米)：** 相机光心（未知的话使用镜头光圈中心位置）相对于云台（一般位于 pitch 轴轴心）的位置（基于 [ROS 坐标系](https://www.ros.org/reps/rep-0103.html)），可由机械图纸得到
+      * **`rpy` (弧度)：** 相机与云台坐标系轴线的角度差，一般调节 **Pitch**即可
+  * **调节 Pitch 方法：**
+      * 获得云台坐标系原点（一般位于 pitch 轴轴心）离地高度 A
+      * 开启自瞄并在图像中心放置一块静止的装甲板，记录下装甲板几何中心的离地高度 B ，**一定要保证 PnP 测距准确**
+      * 查看`/armor_solver/measurement.z`，调节`rpy`的`p`直到 $z=B-A$
+
 
 ![标定pitch](images/deploy_auto_aim-image-2.png)
 
+!> 使用`ros2 param set /dynamic_camera_tf pitch 0.0`动态调节 pitch ，调好后写入 yaml
+
+> 能获得准确外参的方法是使用手眼标定（但笔者一直无法稳定标出），使用无视差点法也能获得大概的光心位置（精度1cm内）
+
 ### 5\. 系统参数调优
 
-#### 5.1. 串口时间补偿（Serial Node）
+#### 5.1. 串口时间补偿（可选）
 
   * **调节参数：** `serial_driver_params.yaml` 中的 `timestamp_offset` (单位：秒)。
   * **步骤：**
@@ -181,7 +188,9 @@ ros2 launch rm_bringup bringup.launch.py
     3.  **左右晃动云台**，使云台姿态发生变换。
     4.  在 Foxglove `参数`面板中，改变 `/serial_driver.timestamp_offset` 的值，目标是**降低曲线的波动范围**。
 
-#### 5.2. 卡尔曼观测噪声（Armor Solver Node）
+> 本质上是为了让串口和图像时间戳对齐
+
+#### 5.2. 卡尔曼观测噪声（可选）
 
   * **调节参数：** `armor_solver_params.yaml` 中 `ekf` 的 `r_x`, `r_y`, `r_z`, `r_yaw`（观测误差）。
   * **原则：** 一般 `r_x = r_y`，`r_yaw` 误差较小可不改。
@@ -191,7 +200,9 @@ ros2 launch rm_bringup bringup.launch.py
     3.  **左右晃动云台**（装甲板不能离开图像）。
     4.  记录晃动过程中曲线的**极大值**和**极小值**。
     5.  使用公式计算误差值并写入 YAML 文件：
-        $$\text{误差} = \left(\frac{\text{极大值}-\text{极小值}}{4}\right)^{2} \div \text{稳态值}$$
+        $$\text{稳态误差} = \left(\frac{\text{极大值}-\text{极小值}}{4}\right)^{2} \div \text{稳态值}$$
+
+> 基本是比预设值小的，调小让滤波器更加相信观测值
 
 ### 6\. 打弹测试与延迟补偿
 
@@ -225,6 +236,8 @@ ros2 launch rm_bringup bringup.launch.py
   * **测试方法：**
     1.  击打**旋转装甲板**。
     2.  观察子弹是**提前**（调小）还是**滞后**（调大）打到。
+
+!> 开火延迟受机械、电控影响大，不稳定的话无论怎么调都无法打到中心。可以让电控测量从拨盘开始转动到摩擦轮掉速时间作为开火延迟，取测量到的最小值写入 yaml
 
 > **📢 重要提示：** 根据经验，[每隔几个小时，打弹测试部分（角度/预测/开火延迟）都需要重新校准](https://sjtu-robomaster-team.github.io/rm-cv-std-how-to-adjust-parameters/)。
 
