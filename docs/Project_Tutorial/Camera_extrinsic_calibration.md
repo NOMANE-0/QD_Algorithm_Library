@@ -53,7 +53,7 @@
     * **工具支持**：在 `rmvision2025` 框架中，已提供专用脚本 `calibrate_gimbal2camera_pitch.py` 与对应的功能开关 `enable_pitch_calibration` 以降低人工标定压力。开启后只需前后推拉移动目标，系统即可自动收集数据完成标定。
 
 * **方法 B：基于 z_world 不变性的系统性调节**
-    * 以下引用自 `rmvision` 开源库作者（陈君）的核心逻辑分享：
+    * 以下引用自[rmvision](https://github.com/chenjunnn/rm_vision)开源库作者（陈君）的核心逻辑分享：
 
 > 好多人问我 solvePnP 出来结果不准的问题，我做个我自己的心得分享：solvePnP 的输入参数有 objectPoints - 世界坐标系下的控制点的坐标 imagePoints - 在图像坐标系下对应的控制点的坐标 cameraMatrix - 相机的内参矩阵 distCoeffs - 相机的畸变系数，而输出的平移向量就是相机与装甲板的距离，而这个距离与上述四个参数都有关，不单是相机标定准就能解决的。
 >
