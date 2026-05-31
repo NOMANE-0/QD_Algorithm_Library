@@ -59,3 +59,8 @@ ros2 topic echo /armor_solver/heartbeat
 # 串口发布频率至少 200 Hz ，建议 1k Hz
 ros2 topic echo /serial_driver/heartbeat
 ```
+
+## 相机内参
+
+使用[OpenCV Calibration](https://gitee.com/slime0rimiru0/open-cv_-calibration)中的`calculateError`程序查看内参标定结果，主要看 norm 距离误差是否在 1% 内
+
