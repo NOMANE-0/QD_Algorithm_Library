@@ -1,6 +1,6 @@
 
 - Linux入门
-  
+  - [ubuntu 入门环境配置](./hello_ubuntu.md)
   - [基础命令](Basic_commands.md)
   - [Git](Git.md)
   - [SSH](SSH.md)
