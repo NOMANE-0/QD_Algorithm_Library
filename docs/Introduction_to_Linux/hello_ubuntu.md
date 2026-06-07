@@ -31,6 +31,24 @@ Signed-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg
 sudo apt update 
 ```
 
+## 换 Fcitx5 输入法
+
+```bash
+sudo apt install fcitx5 fcitx5-config-qt fcitx5-material-color fcitx5-chinese-addons fcitx5-table-extra
+
+# 打开设置界面启动 fcitx
+fcitx5-configtool
+
+# 切换系统默认输入法框架
+im-config
+```
+
+`ctrl + space`激活输入法
+
+[微信输入法皮肤](https://github.com/witt-bit/fcitx5-theme-wechat)
+
+[Using Fcitx 5 on Wayland](https://fcitx-im.org/wiki/Using_Fcitx_5_on_Wayland)
+
 ## 删掉 Snap
 
 ```bash
