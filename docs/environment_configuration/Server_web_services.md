@@ -246,7 +246,7 @@ Type=oneshot
 User=qidian
 Group=qidian
 WorkingDirectory=/home/qidian/QD_Algorithm_Library
-ExecStart=/usr/bin/git pull
+ExecStart=/bin/bash -lc 'git fetch --prune origin main && git merge --ff-only origin/main'
 ```
 
 创建 timer：
@@ -468,6 +468,51 @@ alias: {
 ```
 
 ## 常见问题
+
+### 自动更新服务启动失败
+
+查看日志：
+
+```bash
+systemctl status qd-algo-update.service --no-pager -l
+journalctl -u qd-algo-update.service -n 80 --no-pager
+```
+
+如果日志中出现：
+
+```text
+Your local changes to the following files would be overwritten by merge
+```
+
+说明服务器仓库里有未提交的本地改动。先查看：
+
+```bash
+cd /home/qidian/QD_Algorithm_Library
+git status --short
+git diff
+```
+
+如果这些改动已经提交到远端，或者只是服务器上的临时热修补，可以先保存起来再更新：
+
+```bash
+git stash push -m "server local changes before auto update"
+git fetch --prune origin main
+git merge --ff-only origin/main
+```
+
+如果日志中出现 `HTTP/2`、`GnuTLS`、`TLS connection` 等错误，通常是服务器访问 GitHub 时网络不稳定。可以给仓库设置使用 HTTP/1.1：
+
+```bash
+cd /home/qidian/QD_Algorithm_Library
+git config http.version HTTP/1.1
+```
+
+如果网络仍然不稳定，等待网络恢复后再次执行：
+
+```bash
+git fetch --prune origin main
+git merge --ff-only origin/main
+```
 
 ### 访问 `/algo/` 返回 500
 
