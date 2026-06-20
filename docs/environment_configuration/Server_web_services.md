@@ -38,7 +38,7 @@ sudo apt install -y nginx git openssh-server curl
 | `nginx` | 对外提供导航页、静态网页和反向代理 |
 | `git` | 拉取和更新算法库仓库 |
 | `openssh-server` | 提供 SSH 登录服务 |
-| `curl` | 在服务器上测试本机 HTTP 服务 |
+| `curl` | 在服务器上测试本机 HTTP 服务，也用于下载安装 filebrowser |
 
 如果服务器启用了防火墙，还需要安装或确认 `ufw` 可用：
 
@@ -72,6 +72,224 @@ Nginx 负责统一对外提供 80 端口：
 - `/` 读取 `/var/www/nav`
 - `/disk/` 反向代理到本机 `8080`
 - `/algo/` 静态托管 docsify 文档目录
+
+## File Browser 网盘配置
+
+File Browser 是当前网盘页面使用的后端服务。它不直接暴露到局域网，而是只监听本机地址：
+
+```text
+127.0.0.1:8080
+```
+
+外部用户通过 Nginx 访问：
+
+```text
+http://31ge.local/disk/
+```
+
+当前服务器上的运行方式：
+
+| 项目 | 当前值 |
+| --- | --- |
+| 程序路径 | `/usr/local/bin/filebrowser` |
+| 数据库 | `/etc/filebrowser/filebrowser.db` |
+| 网盘根目录 | `/home/qidian/netdisk` |
+| 实际存储目录 | `/mnt/wd1t/CloudDriver/` |
+| 监听地址 | `127.0.0.1:8080` |
+| URL 前缀 | `/disk` |
+| systemd 服务 | `filebrowser.service` |
+
+检查版本：
+
+```bash
+filebrowser version
+```
+
+### 安装 File Browser
+
+安装依赖：
+
+```bash
+sudo apt update
+sudo apt install -y curl
+```
+
+安装 filebrowser：
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/filebrowser/get/master/get.sh | bash
+```
+
+确认安装位置：
+
+```bash
+which filebrowser
+filebrowser version
+```
+
+一般会安装到：
+
+```text
+/usr/local/bin/filebrowser
+```
+
+### 准备网盘目录
+
+创建配置目录：
+
+```bash
+sudo mkdir -p /etc/filebrowser
+sudo chown -R qidian:qidian /etc/filebrowser
+```
+
+当前服务器把网盘目录做成了软链接：
+
+```bash
+ln -s /mnt/wd1t/CloudDriver /home/qidian/netdisk
+```
+
+检查：
+
+```bash
+ls -ld /home/qidian/netdisk /mnt/wd1t/CloudDriver
+```
+
+如果换服务器，按实际硬盘挂载点修改 `/mnt/wd1t/CloudDriver`。
+
+### 创建 systemd 服务
+
+创建服务文件：
+
+```bash
+sudo nano /etc/systemd/system/filebrowser.service
+```
+
+写入：
+
+```ini
+[Unit]
+Description=File Browser Netdisk
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=qidian
+Group=qidian
+ExecStart=/usr/local/bin/filebrowser -d /etc/filebrowser/filebrowser.db -r /home/qidian/netdisk -a 127.0.0.1 -p 8080 -b /disk
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+```
+
+这里最容易漏的是：
+
+```bash
+-b /disk
+```
+
+因为网盘挂在 Nginx 的 `/disk/` 路径下。如果不设置 base URL，登录页和静态资源路径容易跳到错误位置。
+
+启用服务：
+
+```bash
+sudo systemctl daemon-reload
+sudo systemctl enable --now filebrowser.service
+```
+
+查看状态：
+
+```bash
+systemctl status filebrowser.service --no-pager -l
+journalctl -u filebrowser.service -n 50 --no-pager
+ss -ltnp | grep 8080
+```
+
+正常情况下应看到它监听在：
+
+```text
+127.0.0.1:8080
+```
+
+### 配置用户权限
+
+File Browser 的用户和权限保存在数据库：
+
+```text
+/etc/filebrowser/filebrowser.db
+```
+
+当前服务运行时会占用这个数据库。修改用户前建议先停止服务，避免命令超时：
+
+```bash
+sudo systemctl stop filebrowser.service
+```
+
+添加管理员用户：
+
+```bash
+filebrowser -d /etc/filebrowser/filebrowser.db users add admin '请替换成强密码' --perm.admin
+```
+
+添加普通用户，并禁止删除文件：
+
+```bash
+filebrowser -d /etc/filebrowser/filebrowser.db users add guest '请替换成强密码' \
+  --perm.delete=false \
+  --perm.admin=false
+```
+
+更新已有用户密码：
+
+```bash
+filebrowser -d /etc/filebrowser/filebrowser.db users update guest -p '新密码'
+```
+
+更新已有用户权限，例如禁止删除：
+
+```bash
+filebrowser -d /etc/filebrowser/filebrowser.db users update guest --perm.delete=false
+```
+
+修改完成后重新启动：
+
+```bash
+sudo systemctl start filebrowser.service
+```
+
+再访问：
+
+```text
+http://31ge.local/disk/
+```
+
+### File Browser 常见问题
+
+如果访问 `/disk/` 一直转圈，先确认后端是否运行：
+
+```bash
+systemctl status filebrowser.service --no-pager -l
+ss -ltnp | grep 8080
+curl -I http://127.0.0.1:8080/disk/
+```
+
+如果 `curl` 本机能访问，但浏览器不行，检查 Nginx 的 `/disk/` 反向代理配置。
+
+如果执行 `filebrowser users ls`、`filebrowser config cat` 出现：
+
+```text
+Error: timeout
+```
+
+通常是正在运行的服务占用了数据库。先停止服务后再执行管理命令：
+
+```bash
+sudo systemctl stop filebrowser.service
+filebrowser -d /etc/filebrowser/filebrowser.db users ls
+sudo systemctl start filebrowser.service
+```
 
 ## Nginx 配置
 
