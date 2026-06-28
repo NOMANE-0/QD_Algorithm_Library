@@ -371,3 +371,8 @@ chmod +x PlotJuggler-3.17.2-x86_64.AppImage
 ./PlotJuggler-3.17.2-x86_64.AppImage
 ```
 
+### GUI 硬盘分区工具
+
+```bash
+sudo apt install gparted
+```
