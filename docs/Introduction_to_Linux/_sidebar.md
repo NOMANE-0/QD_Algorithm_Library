@@ -5,6 +5,7 @@
   - [Git](Git.md)
   - [SSH](SSH.md)
   - [Docker](Docker.md)
+  - [Distrobox 与 clangd](Distrobox_clangd.md)
   - [记住内核启动顺序](Kernel_order.md)
   - [swap分区扩容](swap_expansion.md)
   - [Linux零碎教程](Linux_Fragmented_tutorials.md)
